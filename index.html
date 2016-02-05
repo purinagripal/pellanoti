@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height, user-scalable=no" />
+
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="assets/css/styleweb.css" rel="stylesheet"/>
+    <link href="assets/css/pageslider.css" rel="stylesheet">
+</head>
+<body>
+
+<script id="notif-tpl" type="text/template">
+    <div class="app"> 
+        <h1>PhoneGap</h1> 
+        <form id="formulario" name="formulario" method="post" action="PHPServer/registro.php"> 
+            <p><input type="text" id="name" name="name" placeholder="Nombre" required></p> 
+            <p><input type="text" id="email" name="email" placeholder="Correo" required></p> 
+            <p><input type="text" name="regId" id="regId" readonly="readonly" placeholder="regId"></p> 
+            <button type="button" onclick="registrar();">Registar</button> 
+        </form>   
+
+        <div id="deviceready" class="blink"> 
+            <p class="event listening">Connecting to Device</p> 
+            <p class="event received">Device is Ready</p> 
+        </div>   
+    </div>
+</script>
+    
+<script id="home-tpl" type="text/template">
+    <div class="header">
+        <div class="head_sup">
+            <img src="logo.png" /> <h1>Pella de Ocio</h1>
+            
+            <div class="menu_drop dropdown pull-right">
+                <a class="dropdown-toggle" id="dropdownMenuMain" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_locales" >Locales</a></li>
+                    <li><a class="link_eventos" href="#">Eventos</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="menu_salir">Salir</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="head_inf">
+            <div class="dropdown selec_drop pull-right">
+                <a class="dropdown-toggle" id="dropdownMenuCateg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Categoría <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuCateg">
+                    <li><a class="filt_categ" data-id="1">Música</a></li>
+                    <li><a class="filt_categ" data-id="2">Espectáculos</a></li>
+                    <li><a class="filt_categ" data-id="3">Talleres y cursos</a></li>
+                    <li><a class="filt_categ" data-id="4">Charlas y encuentros</a></li>
+                    <li><a class="filt_categ" data-id="5">Deportes</a></li>
+                    <li><a class="filt_categ" data-id="6">Para niños</a></li>
+                    <li><a class="filt_categ" data-id="0">Todas</a></li>
+                </ul>
+            </div>
+            <div class="dropdown selec_drop pull-right">
+              <a class="dropdown-toggle" id="dropdownMenuCiudad" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Lugar <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuCiudad">
+                <li><a class="filt_zona" data-id="2">Corralejo</a></li>
+                <li><a class="filt_zona" data-id="3">Cotillo</a></li>
+                <li><a class="filt_zona" data-id="4">La Oliva</a></li>
+                <li><a class="filt_zona" data-id="1">Lajares</a></li>
+                <li><a class="filt_zona" data-id="6">Puerto del Rosario</a></li>
+                <li><a class="filt_zona" data-id="7">Puerto Lajas</a></li>
+                <li><a class="filt_zona" data-id="5">Tindaya</a></li>
+                <li><a class="filt_zona" data-id="0">Todas</a></li>
+              </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="container-fluid guiaeventos wrapper-absolute-80">
+    
+    </div>
+</script>
+
+<script id="eventos-list-tpl" type="text/template">
+    <div class="row cuadro" data-id="{{id_evento}}" >
+        <div class="col-xs-9">                
+            <h5><a href="#eventos/{{id_evento}}" >{{title}}</a></h5>
+            <div class="row">
+                <div class="col-xs-5">
+                    <a href="#eventos/{{id_evento}}" ><img src="http://test.mepwebs.com/uploads/medias/{{image}}" class="img-responsive" /></a>
+                </div>
+                <div class="col-xs-7">
+                    <p>{{Eventor.first_name}}</p><p>{{Ciudad.nombre}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 date">
+            <span class="dia">{{fecha_dm.diasemana}}</span>
+            <span><b>{{fecha_dm.dia}}</b> {{fecha_dm.mes}}</span>
+            <span class="hora">{{hora_format}} h</span>
+        </div>
+    </div>
+</script>
+
+<script id="evento-tpl" type="text/template">
+    <div class="header-50">
+        <div class="head_sup">
+            <a class="boton_atras pull-left"><i class="fa fa-arrow-left"></i></a>
+            <a class="boton_inicio pull-left"><i class="fa fa-home"></i></a>
+            
+            <img src="logo.png" /> <h1>Pella de Ocio</h1>
+            
+            <div class="menu_drop dropdown pull-right">
+                <a class="dropdown-toggle" id="dropdownMenuMain" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_locales" >Locales</a></li>
+                    <li><a class="link_eventos" >Eventos</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="menu_salir">Salir</a></li>
+                </ul>
+            </div>
+            <a class="pull-right" onclick="window.plugins.socialsharing.share('Próximamente {{title}}, pincha en el enlace para más info.', 'Pella de Ocio', null, 'http://test.mepwebs.com/es/evento-{{id_evento}}')"><i class="fa fa-share-alt"></i></a>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    
+    <div class="container wrapper-absolute-50 evento-detalle">
+        <div class="row cuadro">
+            <div class="col-xs-12">
+                <h4>{{title}}</h4>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-lg-6">
+                <img src="http://test.mepwebs.com/uploads/medias/{{image}}" class="img-responsive" />
+            </div>
+            <div class="col-xs-12 col-sm-7 col-lg-6">
+                <div class="date">
+                    <span class="dia">{{fecha_dm.diasemana}} </span>
+                    <span><b>{{fecha_dm.dia}}</b> {{fecha_dm.mes}}, </span>
+                    <span class="hora"><i class="fa fa-clock-o"></i> {{hora_format}} h</span>
+                    <div class="clearfix"></div>
+                    <span class="local"><a class="local_link" data-id="{{Eventor.id_user}}">{{Eventor.first_name}}</a></span> <span class="ciudad">{{Ciudad.nombre}}</span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="datos-evento">
+                    <p>{{precio}}</p>
+                    <p>{{horario}}</p>
+                </div>
+                <div class="descr-evento">
+                    {{{descripcion}}}
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="datos-evento">
+                    <h5>Dónde ...</h5>
+                    <p class="direc">{{direccion}}. {{Ciudad.nombre}}</p>
+                    <div id="eve-map-canvas"></div>
+                </div>
+                <div class="date local_link" data-id="{{Eventor.id_user}}">
+                    <span class="local">{{Eventor.first_name}} </span><span class="ciudad"><i class="fa fa-plus-circle"></i> info</span>
+                    <div class="clearfix"></div>
+                </div>
+            </div>   
+        </div>
+    </div>
+    </script>
+
+<script id="locales-tpl" type="text/template">
+    <div class="header">
+        <div class="head_sup">
+            <a class="boton_inicio pull-left"><i class="fa fa-home"></i></a>
+            
+            <img src="logo.png" /> <h1>Pella de Ocio</h1>
+            
+            <div class="menu_drop dropdown pull-right">
+                <a class="dropdown-toggle" id="dropdownMenuMain" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_locales" href="#locales" >Locales</a></li>
+                    <li><a class="link_eventos" >Eventos</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="menu_salir">Salir</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="head_inf">
+            <div class="dropdown selec_drop pull-right">
+              <a class="dropdown-toggle" id="dropdownMenuCiudad" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Lugar <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuCiudad">
+                <li><a class="filt_zona" data-id="2">Corralejo</a></li>
+                <li><a class="filt_zona" data-id="3">Cotillo</a></li>
+                <li><a class="filt_zona" data-id="4">La Oliva</a></li>
+                <li><a class="filt_zona" data-id="1">Lajares</a></li>
+                <li><a class="filt_zona" data-id="6">Puerto del Rosario</a></li>
+                <li><a class="filt_zona" data-id="7">Puerto Lajas</a></li>
+                <li><a class="filt_zona" data-id="5">Tindaya</a></li>
+                <li><a class="filt_zona" data-id="0">Todas</a></li>
+              </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="container-fluid guiaeventos lista-locales wrapper-absolute-80">
+        {{#each this}}
+            <div class="row cuadro" data-id="{{id_user}}" >
+                <div class="col-xs-12">                
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <img src="http://test.mepwebs.com/uploads/medias/{{image}}" class="img-responsive" />
+                        </div>
+                        <div class="col-xs-7">
+                            <h4>{{first_name}}</h4>
+                            <p>{{CiudadEventor.nombre}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</script>
+    
+<script id="local-tpl" type="text/template">
+    <div class="header-50">
+        <div class="head_sup">
+            <a class="boton_atras pull-left"><i class="fa fa-arrow-left"></i></a>
+            <a class="boton_inicio pull-left"><i class="fa fa-home"></i></a>
+            
+            <img src="logo.png" /> <h1>Pella de Ocio</h1>
+            
+            <div class="menu_drop dropdown pull-right">
+                <a class="dropdown-toggle" id="dropdownMenuMain" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_locales" >Locales</a></li>
+                    <li><a class="link_eventos" >Eventos</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="menu_salir">Salir</a></li>
+                </ul>
+            </div>
+            <a class="pull-right" onclick="window.plugins.socialsharing.share('{{Eventor.first_name}}, pincha en el enlace para más info.', 'Pella de Ocio', null, 'http://test.mepwebs.com/es/')"><i class="fa fa-share-alt"></i></a>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    
+    <div class="container-fluid wrapper-absolute-50">
+        <div class="evento-detalle localDetails">
+            <!-- local-details-tpl -->
+        </div>
+        <div class="guiaeventos eventoslocal">
+            <h2>Próximos eventos</h2>
+            <!-- eventos -->
+        </div>
+    </div>
+</script>
+    
+<script id="local-details-tpl" type="text/template">
+    <div class="cuadro">
+        <div class="col-xs-12">
+            <h4>{{Eventor.first_name}}</h4>
+        </div>
+        <div class="col-xs-12 col-sm-5 col-lg-6">
+            <img src="http://test.mepwebs.com/uploads/medias/{{Eventor.image}}" class="img-responsive" />
+        </div>
+        <div class="col-xs-12 col-sm-7 col-lg-6">
+            <div class="descr-evento descr-local">
+                {{{Eventor.resume}}}
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="datos-evento">
+                <h5>Dónde ...</h5>
+                <p class="direc">{{Eventor.direccion}}. {{Eventor.CiudadEventor.nombre}}</p>
+                <div id="local-map-canvas"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</script>
+
+    
+<script src="cordova.js"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMrLbYMNSnF_dgwi5sG-PajGxKQ5Yv1rQ"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.22"></script>
+    
+<script src="lib/fastclick.js"></script>
+<script src="lib/handlebars.js"></script>
+<script src="lib/jquery.js"></script>
+<script src="lib/underscore.js"></script>
+<script src="lib/backbone.js"></script>
+<script src="lib/pageslider.js"></script>
+<script src="lib/bootstrap.min.js"></script>
+    
+<script src="js/models.js"></script>
+<script src="js/HomeView.js"></script>
+<script src="js/EventoListItemView.js"></script>    
+<script src="js/EventoView.js"></script>
+<script src="js/LocalesView.js"></script>
+<script src="js/LocalView.js"></script>
+<script src="js/LocalDetailsView.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
