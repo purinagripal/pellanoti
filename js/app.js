@@ -233,6 +233,8 @@
         alert("error: "+error);
     };
     function onNotificationGCM(e) { 
+        alert('Entrado en onNotificationGCM');
+        alert("Regid " + e.regid); 
         switch( e.event ) 
         { 
             case 'registered': 
