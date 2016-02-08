@@ -232,7 +232,8 @@
         console.log("error: "+error); 
         alert("error: "+error);
     };
-    function onNotificationGCM(e) { 
+    
+    onNotificationGCM = function(e) { 
         alert('Entrado en onNotificationGCM');
         alert("Regid " + e.regid); 
         switch( e.event ) 
