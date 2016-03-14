@@ -214,13 +214,17 @@
         
         
         var pushNotification = window.plugins.pushNotification; 
-        console.log(":::device.platform:::"); 
-        console.log(device.platform); 
-        console.log("Register called"); 
-        alert(":::device.platform:::"+device.platform);
-        //tu Project ID aca!! 
-        pushNotification.register(successHandler, errorHandler, {"senderID":"41817165383","ecb":"onNotificationGCM"}); 
-        
+        // comprobamos si tiene RegistrationId
+        if( window.localStorage.getItem('reg_id') ){
+            // ya esta registrado en GCM
+            alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
+            
+        } else {
+            // si no se ha registrado en GCM
+            // registramos
+            pushNotification.register(successHandler, errorHandler, {"senderID":"41817165383","ecb":"onNotificationGCM"}); 
+        }
+    
     };
     
     // result contains any message sent from the plugin call 
@@ -234,8 +238,6 @@
     };
     
     onNotificationGCM = function(e) { 
-        alert('Entrado en onNotificationGCM');
-        alert("Regid " + e.regid); 
         switch( e.event ) 
         { 
             case 'registered': 
@@ -243,8 +245,9 @@
                 { 
                     console.log("Regid " + e.regid); 
                     alert('registration id = '+e.regid); 
-                    //Cuando se registre le pasamos el regid al input 
-                    //document.getElementById('regId').value = e.regid; 
+                    //  guardamos el RegistrationId en localStorage...
+                    window.localStorage.setItem('reg_id', e.regid);
+                    // mandarlo a la bbdd para guardarlo
                 } 
             break; 
 
