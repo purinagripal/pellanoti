@@ -48,10 +48,15 @@
     
     <!--    Notificaciones PUSH   -->
     <preference name="android-build-tool" value="gradle" />
-    <plugin name="com.phonegap.plugins.pushplugin" spec="2.5.0" source="pgb" >
+    <plugin name="phonegap-plugin-push" source="npm">
         <param name="SENDER_ID" value="41817165383" />
     </plugin>
     
+    <!--
+    <plugin name="com.phonegap.plugins.pushplugin" spec="2.5.0" source="pgb" >
+        <param name="SENDER_ID" value="41817165383" />
+    </plugin>
+    -->
     <!-- ultima config notificaciones PUSH
     <plugin name="com.phonegap.plugins.pushplugin" spec="2.5.0" source="pgb" />
     -->
