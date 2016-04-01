@@ -213,7 +213,7 @@
         document.addEventListener("backbutton", onBackKeyDown, false);
         
         // NOTIFICACIONES PUSH
-        window.push = PushNotification.init({
+        var push = PushNotification.init({
             android: {
                 senderID: "41817165383"
             },
@@ -225,6 +225,25 @@
             windows: {}
         });
 
+        push.on('registration', function(data) {
+            console.log(data.registrationId);
+            alert("registration id: "+data.registrationId);
+        });
+
+        push.on('notification', function(data) {
+            alert('notificacion');
+            // data.message,
+            // data.title,
+            // data.count,
+            // data.sound,
+            // data.image,
+            // data.additionalData
+        });
+
+        push.on('error', function(e) {
+            alert('error');
+            // e.message
+        });
         
         
         // comprobamos si tiene RegistrationId
@@ -240,25 +259,7 @@
     
     };
     
-    window.push.on('registration', function(data) {
-            console.log(data.registrationId);
-            alert("registration id: "+data.registrationId);
-        });
-
-    window.push.on('notification', function(data) {
-        alert('notificacion');
-        // data.message,
-        // data.title,
-        // data.count,
-        // data.sound,
-        // data.image,
-        // data.additionalData
-    });
-
-    window.push.on('error', function(e) {
-        alert('error');
-        // e.message
-    });
+    
     
     // funcion q gestiona las notificaciones q llegan a la APP
     onNotificationGCM = function(e) { 
