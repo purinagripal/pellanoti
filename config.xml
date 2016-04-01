@@ -47,6 +47,7 @@
     <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
     
     <!--    Notificaciones PUSH   -->
+    <preference name="android-build-tool" value="gradle" />
     <plugin name="phonegap-plugin-push" source="npm">
         <param name="SENDER_ID" value="41817165383" />
     </plugin>
