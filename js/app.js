@@ -203,7 +203,7 @@
                 navigator.notification.alert(
                     message,    // message
                     null,       // callback
-                    "Workshop", // title
+                    "Pella de Ocio", // title
                     'OK'        // buttonName
                 );
             };
@@ -212,7 +212,7 @@
         // Now safe to use device APIs
         document.addEventListener("backbutton", onBackKeyDown, false);
         
-        
+        // NOTIFICACIONES PUSH
         var pushNotification = window.plugins.pushNotification; 
         // comprobamos si tiene RegistrationId
         if( window.localStorage.getItem('reg_id') ){
@@ -221,7 +221,7 @@
             
         } else {
             // si no se ha registrado en GCM
-            // registramos
+            // registramos para obtener el reg_id
             pushNotification.register(successHandler, errorHandler, {"senderID":"41817165383","ecb":"onNotificationGCM"}); 
         }
     
@@ -230,16 +230,18 @@
     // result contains any message sent from the plugin call 
     function successHandler(result) { 
         console.log('Callback Success! Result = '+result);
-        alert('Callback Success! Result = '+result);
+        //alert('Callback Success! Result = '+result);
     }; 
     function errorHandler(error) { 
         console.log("error: "+error); 
-        alert("error: "+error);
+        //alert("error: "+error);
     };
     
+    // funcion q gestiona las notificaciones q llegan a la APP
     onNotificationGCM = function(e) { 
         switch( e.event ) 
         { 
+            // notificacion de registro correcto
             case 'registered': 
                 if ( e.regid.length > 0 ) 
                 { 
@@ -248,23 +250,30 @@
                     //  guardamos el RegistrationId en localStorage...
                     window.localStorage.setItem('reg_id', e.regid);
                     // mandarlo a la bbdd para guardarlo
+                    this.saveRegistrationId_android(e.regid);
                 } 
             break; 
-
-            case 'message': 
-              // NOTIFICACION!!! 
-              alert('message = '+e.message+' msgcnt = '+e.msgcnt); 
-            break; 
-
+            // notificacion de error al registrarnos
             case 'error': 
               alert('GCM error = '+e.msg); 
             break; 
 
+            // mensaje de notificacion
+            case 'message': 
+              // NOTIFICACION!!! 
+              alert('message = '+e.message+' msgcnt = '+e.msgcnt); 
+            break; 
+            
+            // notificacion desconocida
             default: 
               alert('An unknown GCM event has occurred'); 
               break; 
         } 
     };
+    
+    function saveRegistrationId_android(registration_id) {
+        // guardamos el reg_ig en nuestro servidor
+    }
     
     
     
