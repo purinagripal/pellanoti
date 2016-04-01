@@ -213,22 +213,10 @@
         document.addEventListener("backbutton", onBackKeyDown, false);
         
         // NOTIFICACIONES PUSH
-        window.push = PushNotification.init({
-            android: {
-                senderID: "41817165383"
-            },
-            ios: {
-                alert: "true",
-                badge: "true",
-                sound: "true"
-            },
-            windows: {}
-        });
-
-        
+        var pushNotification = window.plugins.pushNotification; 
         
         // comprobamos si tiene RegistrationId
-        /*if( window.localStorage.getItem('reg_id') ){
+        if( window.localStorage.getItem('reg_id') ){
             // ya esta registrado en GCM
             alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
             
@@ -236,29 +224,19 @@
             // si no se ha registrado en GCM
             // registramos para obtener el reg_id
             pushNotification.register(successHandler, errorHandler, {"senderID":"41817165383","ecb":"onNotificationGCM"}); 
-        }*/
+        }
     
     };
     
-    window.push.on('registration', function(data) {
-            console.log(data.registrationId);
-            alert("registration id: "+data.registrationId);
-        });
-
-    window.push.on('notification', function(data) {
-        alert('notificacion');
-        // data.message,
-        // data.title,
-        // data.count,
-        // data.sound,
-        // data.image,
-        // data.additionalData
-    });
-
-    window.push.on('error', function(e) {
-        alert('error');
-        // e.message
-    });
+    // result contains any message sent from the plugin call 
+    function successHandler(result) { 
+        console.log('Callback Success! Result = '+result);
+        //alert('Callback Success! Result = '+result);
+    }; 
+    function errorHandler(error) { 
+        console.log("error: "+error); 
+        //alert("error: "+error);
+    };
     
     // funcion q gestiona las notificaciones q llegan a la APP
     onNotificationGCM = function(e) { 
