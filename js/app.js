@@ -213,7 +213,20 @@
         document.addEventListener("backbutton", onBackKeyDown, false);
         
         // NOTIFICACIONES PUSH
-        var pushNotification = window.plugins.pushNotification; 
+        //var pushNotification = window.plugins.pushNotification; 
+        
+        var pushNotification = window.plugins.pushNotification.init({
+            "android": {
+                "senderID": "41817165383"
+            },
+            "ios": {
+                "alert": "true",
+                "badge": "true",
+                "sound": "true"
+            },
+            "windows": {}
+        });
+        
         // comprobamos si tiene RegistrationId
         if( window.localStorage.getItem('reg_id') ){
             // ya esta registrado en GCM
