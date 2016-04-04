@@ -251,7 +251,7 @@
         });
 
         push.on('notification', function(data) {
-            alert('notificacion');
+            alert('notificacion: '+data.message);
             // data.message,
             // data.title,
             // data.count,
