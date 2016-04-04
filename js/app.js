@@ -213,27 +213,18 @@
         document.addEventListener("backbutton", onBackKeyDown, false);
         
         //  --- NOTIFICACIONES PUSH
-        var push;
-        // comprobamos si tiene RegistrationId
-        if( window.localStorage.getItem('reg_id') ){
-            // ya esta registrado en GCM
-            alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
-            
-        } else {
-            // si no se ha registrado en GCM
-            // registramos para obtener el reg_id
-            push = PushNotification.init({
-                android: {
-                    senderID: "41817165383"
-                },
-                ios: {
-                    alert: "true",
-                    badge: "true",
-                    sound: "true"
-                },
-                windows: {}
-            });
-        }
+        var push = PushNotification.init({
+            android: {
+                senderID: "41817165383"
+            },
+            ios: {
+                alert: "true",
+                badge: "true",
+                sound: "true"
+            },
+            windows: {}
+        });
+        
         
 
         push.on('registration', function(data) {
@@ -243,10 +234,20 @@
             console.log('registration_id: ');
             console.log(data.registrationId);
             
-            //  guardamos el RegistrationId en localStorage...
-            window.localStorage.setItem('reg_id', data.registrationId);
-            // mandarlo a la bbdd para guardarlo
-            this.saveRegistrationId_android(data.registrationId);
+            //  guardamos el RegistrationId en localStorage y en BBDD la primera vez...
+            // comprobamos si tiene RegistrationId
+            if( window.localStorage.getItem('reg_id') ){
+                // ya esta guardado
+                alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
+
+            } else {
+                // lo guardamos en localstorage y bbdd
+                window.localStorage.setItem('reg_id', data.registrationId);
+                // mandarlo a la bbdd para guardarlo
+                this.saveRegistrationId_android(data.registrationId);
+            }
+            
+            
         });
 
         push.on('notification', function(data) {
