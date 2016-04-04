@@ -212,18 +212,29 @@
         // Now safe to use device APIs
         document.addEventListener("backbutton", onBackKeyDown, false);
         
-        // NOTIFICACIONES PUSH
-        var push = PushNotification.init({
-            android: {
-                senderID: "41817165383"
-            },
-            ios: {
-                alert: "true",
-                badge: "true",
-                sound: "true"
-            },
-            windows: {}
-        });
+        //  --- NOTIFICACIONES PUSH
+        var push;
+        // comprobamos si tiene RegistrationId
+        if( window.localStorage.getItem('reg_id') ){
+            // ya esta registrado en GCM
+            alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
+            
+        } else {
+            // si no se ha registrado en GCM
+            // registramos para obtener el reg_id
+            push = PushNotification.init({
+                android: {
+                    senderID: "41817165383"
+                },
+                ios: {
+                    alert: "true",
+                    badge: "true",
+                    sound: "true"
+                },
+                windows: {}
+            });
+        }
+        
 
         push.on('registration', function(data) {
             
@@ -234,6 +245,8 @@
             
             //  guardamos el RegistrationId en localStorage...
             window.localStorage.setItem('reg_id', data.registrationId);
+            // mandarlo a la bbdd para guardarlo
+            this.saveRegistrationId_android(data.registrationId);
         });
 
         push.on('notification', function(data) {
@@ -252,55 +265,11 @@
         });
         
         
-        // comprobamos si tiene RegistrationId
-        /*if( window.localStorage.getItem('reg_id') ){
-            // ya esta registrado en GCM
-            alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
-            
-        } else {
-            // si no se ha registrado en GCM
-            // registramos para obtener el reg_id
-            pushNotification.register(successHandler, errorHandler, {"senderID":"41817165383","ecb":"onNotificationGCM"}); 
-        }*/
+        
     
     };
-    
-    
-    
-    // funcion q gestiona las notificaciones q llegan a la APP
-    onNotificationGCM = function(e) { 
-        switch( e.event ) 
-        { 
-            // notificacion de registro correcto
-            case 'registered': 
-                if ( e.regid.length > 0 ) 
-                { 
-                    console.log("Regid " + e.regid); 
-                    alert('registration id = '+e.regid); 
-                    //  guardamos el RegistrationId en localStorage...
-                    window.localStorage.setItem('reg_id', e.regid);
-                    // mandarlo a la bbdd para guardarlo
-                    this.saveRegistrationId_android(e.regid);
-                } 
-            break; 
-            // notificacion de error al registrarnos
-            case 'error': 
-              alert('GCM error = '+e.msg); 
-            break; 
-
-            // mensaje de notificacion
-            case 'message': 
-              // NOTIFICACION!!! 
-              alert('message = '+e.message+' msgcnt = '+e.msgcnt); 
-            break; 
-            
-            // notificacion desconocida
-            default: 
-              alert('An unknown GCM event has occurred'); 
-              break; 
-        } 
-    };
-    
+     
+   
     function saveRegistrationId_android(registration_id) {
         // guardamos el reg_ig en nuestro servidor
     }
