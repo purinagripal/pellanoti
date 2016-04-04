@@ -226,8 +226,14 @@
         });
 
         push.on('registration', function(data) {
-            console.log(data.registrationId);
+            
             alert("registration id: "+data.registrationId);
+            console.log(data);
+            console.log('registration_id: ');
+            console.log(data.registrationId);
+            
+            //  guardamos el RegistrationId en localStorage...
+            window.localStorage.setItem('reg_id', data.registrationId);
         });
 
         push.on('notification', function(data) {
