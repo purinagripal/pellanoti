@@ -227,7 +227,6 @@
         
 
         push.on('registration', function(data) {            
-            
             // comprobamos si tiene RegistrationId
             if( window.localStorage.getItem('reg_id') ){
                 // ya esta guardado
@@ -254,17 +253,21 @@
 
         push.on('notification', function(data) {
             
-            //alert('notificacion: '+data.message);
+            console.log('notificacion: '+data.message+' id_evento: '+data.id_evento+' additional data: '+data.additionalData);
             
             if(window.localStorage.getItem('notificaciones')) {
+                console.log('existe localstorage');
                 // tenemos notificaciones guardadas
                 var notif_anteriores = window.localStorage.getItem('notificaciones');
                 // añadimos la nueva
-                window.localStorage.setItem('notificaciones') = notif_anteriores.push(data.id_evento);
+                //window.localStorage.setItem('notificaciones') = notif_anteriores.push(data.id_evento);
+                window.localStorage.setItem('notificaciones') = notif_anteriores.push(data.message);
             } else {
+                console.log('crea localstorage con '+data.id_evento);
                 // aun no hay ninguna notificacion guardada
                 // guardamos la primera
-                window.localStorage.setItem('notificaciones') = [data.id_evento];
+                //window.localStorage.setItem('notificaciones') = [data.id_evento];
+                window.localStorage.setItem('notificaciones') = [data.message];
             }
             
         });
