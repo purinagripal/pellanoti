@@ -254,7 +254,7 @@
         push.on('notification', function(data) {
             
             console.log('notificacion: '+data.message);
-            console.log(' additional data: ');
+            console.log(' additional data: '+data.additionalData.id_evento);
             console.log(data.additionalData);
             
             var notif_anteriores;
@@ -263,19 +263,18 @@
                 console.log('existe localstorage');
                 // tenemos notificaciones guardadas
                 notif_anteriores = window.localStorage.getItem('notificaciones');
+                notif_anteriores = JSON.parse(notif_anteriores);
                 // añadimos la nueva
                 notif_anteriores.push(data.message);
                 
-                //window.localStorage.setItem('notificaciones') = notif_anteriores.push(data.id_evento);
-                window.localStorage.setItem('notificaciones', notif_anteriores);
+                window.localStorage.setItem('notificaciones', JSON.stringify(notif_anteriores));
                 
             } else {
-                console.log('crea localstorage con '+data.id_evento);
+                console.log('crea localstorage con '+data.message);
                 // aun no hay ninguna notificacion guardada
                 notif_anteriores = [data.message];
                 // guardamos la primera
-                //window.localStorage.setItem('notificaciones') = [data.id_evento];
-                window.localStorage.setItem('notificaciones', notif_anteriores);
+                window.localStorage.setItem( 'notificaciones', JSON.stringify(notif_anteriores) );
             }
             
         });
