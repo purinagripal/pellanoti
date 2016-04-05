@@ -225,39 +225,48 @@
             windows: {}
         });
         
-        
 
-        push.on('registration', function(data) {
+        push.on('registration', function(data) {            
             
-            alert("registration id: "+data.registrationId);
-            console.log(data);
-            console.log('registration_id: ');
-            console.log(data.registrationId);
-            
-            //  guardamos el RegistrationId en localStorage y en BBDD la primera vez...
             // comprobamos si tiene RegistrationId
             if( window.localStorage.getItem('reg_id') ){
                 // ya esta guardado
                 alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
+                
+                if( window.localStorage.getItem('reg_id') != data.registrationId ) {
+                    // si ha cambiado lo guardamos DE NUEVO
+                    // lo guardamos en LocalStorage 
+                    window.localStorage.setItem('reg_id', data.registrationId);
+                    // y en la BBDD
+                    this.saveRegistrationId_android(data.registrationId);
+                }
 
             } else {
-                // lo guardamos en localstorage y bbdd
+                alert("registration id: "+data.registrationId);
+                
+                // lo guardamos por PRIMERA vez 
+                // en LocalStorage 
                 window.localStorage.setItem('reg_id', data.registrationId);
-                // mandarlo a la bbdd para guardarlo
+                // y en la BBDD 
                 this.saveRegistrationId_android(data.registrationId);
             }
-            
-            
         });
 
         push.on('notification', function(data) {
-            alert('notificacion: '+data.message);
-            // data.message,
-            // data.title,
-            // data.count,
-            // data.sound,
-            // data.image,
-            // data.additionalData
+            
+            //alert('notificacion: '+data.message);
+            
+            if(window.localStorage.getItem('notificaciones')) {
+                // tenemos notificaciones guardadas
+                var notif_anteriores = window.localStorage.getItem('notificaciones');
+                // añadimos la nueva
+                window.localStorage.setItem('notificaciones') = notif_anteriores.push(data.id_evento);
+            } else {
+                // aun no hay ninguna notificacion guardada
+                // guardamos la primera
+                window.localStorage.setItem('notificaciones') = [data.id_evento];
+            }
+            
         });
 
         push.on('error', function(e) {
