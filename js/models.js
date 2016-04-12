@@ -7,7 +7,8 @@ var EventoCollection = Backbone.Collection.extend({
     model: Evento,
 
     //url: "http://localhost/fuerteagenda_cms/agenda_app",
-    url: "http://test.mepwebs.com/agenda_app",
+    //url: "http://test.mepwebs.com/agenda_app",
+    url: "http://test.mepwebs.com/appeventos",
     
     obtenerLocales: function(){
         
@@ -40,4 +41,13 @@ var EventoCollection = Backbone.Collection.extend({
     
     }
 
+});
+
+var Notificaciones = Backbone.Model.extend({
+    idAttribute: 'id_notif',
+    
+    //urlRoot: "http://localhost/fuerteagenda_cms/appusers", 
+    urlRoot: "http://test.mepwebs.com/appusers", 
+    
+    
 });

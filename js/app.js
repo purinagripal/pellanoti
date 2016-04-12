@@ -210,7 +210,7 @@
         }
         
         // Now safe to use device APIs
-        document.addEventListener("backbutton", onBackKeyDown, false);
+        //document.addEventListener("backbutton", onBackKeyDown, false);
         
         //  --- NOTIFICACIONES PUSH
         var push = PushNotification.init({
@@ -225,7 +225,6 @@
             windows: {}
         });
         
-
         push.on('registration', function(data) {            
             // comprobamos si tiene RegistrationId
             if( window.localStorage.getItem('reg_id') ){
@@ -237,7 +236,7 @@
                     // lo guardamos en LocalStorage 
                     window.localStorage.setItem('reg_id', data.registrationId);
                     // y en la BBDD
-                    this.saveRegistrationId_android(data.registrationId);
+                    saveRegistrationId_android(data.registrationId);
                 }
 
             } else {
@@ -247,14 +246,14 @@
                 // en LocalStorage 
                 window.localStorage.setItem('reg_id', data.registrationId);
                 // y en la BBDD 
-                this.saveRegistrationId_android(data.registrationId);
+                saveRegistrationId_android(data.registrationId);
             }
         });
 
         push.on('notification', function(data) {
             
             console.log('notificacion: '+data.message);
-            console.log(' additional data: '+data.additionalData.id_evento);
+            console.log('id_evento: '+data.additionalData.id_evento);
             console.log(data.additionalData);
             
             var notif_anteriores;
@@ -265,14 +264,14 @@
                 notif_anteriores = window.localStorage.getItem('notificaciones');
                 notif_anteriores = JSON.parse(notif_anteriores);
                 // añadimos la nueva
-                notif_anteriores.push(data.message);
+                notif_anteriores.push(data.additionalData.id_evento);
                 
                 window.localStorage.setItem('notificaciones', JSON.stringify(notif_anteriores));
                 
             } else {
                 console.log('crea localstorage con '+data.message);
                 // aun no hay ninguna notificacion guardada
-                notif_anteriores = [data.message];
+                notif_anteriores = [data.additionalData.id_evento];
                 // guardamos la primera
                 window.localStorage.setItem( 'notificaciones', JSON.stringify(notif_anteriores) );
             }
