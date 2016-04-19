@@ -210,7 +210,7 @@
         }
         
         // Now safe to use device APIs
-        //document.addEventListener("backbutton", onBackKeyDown, false);
+        document.addEventListener("backbutton", onBackKeyDown, false);
         
         //  --- NOTIFICACIONES PUSH
         var push = PushNotification.init({
@@ -300,7 +300,12 @@
         // si está en home, sale de la app
         if(window.historial.length == 1) {
             console.log("sale de la app");
-            navigator.app.exitApp();
+            //navigator.app.exitApp();
+            navigator.Backbutton.goHome(function() {
+              console.log('success background')
+            }, function() {
+              console.log('fail background')
+            });
         } else {
             console.log("boton atras - no sale de la app");
             console.log(window.historial);

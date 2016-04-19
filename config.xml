@@ -52,6 +52,8 @@
     <plugin name="phonegap-plugin-push" source="npm">
         <param name="SENDER_ID" value="41817165383" />
     </plugin>
+    <!-- BackButton para poner en BACKGROUND -->
+    <plugin name="com.badrit.backbutton" spec="0.1.0" source="pgb" />
     
     <!--
     <plugin name="com.phonegap.plugins.pushplugin" spec="2.5.0" source="pgb" >
