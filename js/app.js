@@ -256,6 +256,8 @@
             console.log('id_evento: '+data.additionalData.id_evento);
             console.log(data.additionalData);
             
+            alert('notificacion: '+data.message);
+            
             var notif_anteriores;
             
             if( window.localStorage.getItem('notificaciones') ) {
@@ -288,9 +290,57 @@
     
     };
      
-   
-    function saveRegistrationId_android(registration_id) {
-        // guardamos el reg_ig en nuestro servidor
+    // guardamos el reg_ig en nuestro servidor
+    function saveRegistrationId_android(registrationId) {
+        
+        // sistema operativo del dispositivo
+        var sistema_disp;
+        if (device.platform == 'android' || device.platform == 'Android') {
+            sistema_disp = 'android';
+        }
+        if (device.platform != 'android' && device.platform != 'Android' && device.platform !='Win32NT') {
+            sistema_disp = 'ios';
+        }
+        if(device.platform == 'Win32NT'){
+            sistema_disp = 'wp8';
+        }
+        
+        // modelo 
+        var notify = new Notificacion();
+        
+        if( window.localStorage.getItem('id_notif') ){
+            // si ya existe el usuario_notify
+            // preparamos el modelo con los datos
+            notify.set({id_notif: window.localStorage.getItem('id_notif'),
+                        registration_id: registrationId,
+                        sistema: sistema_disp});
+            
+        } else {
+            // si no existe el usuario_notify
+            // preparamos el modelo con los datos
+            // sin id_notif se creará una nueva entrada
+            notify.set({registration_id: registrationId,
+                        sistema: sistema_disp});
+        }
+        
+        // guardamos en el servidor
+        // save genera POST /appnotifys
+        notify.save(null, {
+            success:function(model, response){
+                console.log("succes save");
+                console.log("model:");
+                console.log(model);
+                console.log("response:");
+                console.log(response);
+            },
+            error: function(model, response) {
+                console.log("error save");
+                console.log(model);
+                console.log(response);
+
+            },
+            wait: true
+        });
     }
     
     
@@ -300,12 +350,12 @@
         // si está en home, sale de la app
         if(window.historial.length == 1) {
             console.log("sale de la app");
-            //navigator.app.exitApp();
-            navigator.Backbutton.goHome(function() {
+            navigator.app.exitApp();
+            /*navigator.Backbutton.goHome(function() {
               console.log('success background')
             }, function() {
               console.log('fail background')
-            });
+            });*/
         } else {
             console.log("boton atras - no sale de la app");
             console.log(window.historial);
