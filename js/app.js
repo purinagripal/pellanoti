@@ -334,7 +334,7 @@
                 console.log(model);
                 console.log("response:");
                 console.log(response);
-                
+        
                 window.localStorage.setItem('id_follow', follower.id_follow);
                 console.log(follower.id_follow);
             },
