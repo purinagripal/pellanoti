@@ -43,11 +43,11 @@ var EventoCollection = Backbone.Collection.extend({
 
 });
 
-var Notificacion = Backbone.Model.extend({
-    idAttribute: 'id_notif',
+var Follower = Backbone.Model.extend({
+    idAttribute: 'id_follow',
     
     //urlRoot: "http://localhost/fuerteagenda_cms/appusers", 
-    urlRoot: "http://test.mepwebs.com/appnotifys", 
+    urlRoot: "http://test.mepwebs.com/appfollowers", 
     
     
 });

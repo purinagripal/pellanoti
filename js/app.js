@@ -306,37 +306,39 @@
         }
         
         // modelo 
-        var notify = new Notificacion();
+        var follower = new Follower();
         
-        if( window.localStorage.getItem('id_notif') ){
-            // si ya existe el usuario_notify
+        if( window.localStorage.getItem('id_follow') ){
+            // si ya existe el follower
             // preparamos el modelo con los datos
-            notify.set({id_notif: window.localStorage.getItem('id_notif'),
+            follower.set({id_follow: window.localStorage.getItem('id_follow'),
                         registration_id: registrationId,
                         sistema: sistema_disp});
             
         } else {
-            // si no existe el usuario_notify
+            // si no existe el follower
             // preparamos el modelo con los datos
-            // sin id_notif se creará una nueva entrada
-            notify.set({registration_id: registrationId,
+            // sin id_follow se creará una nueva entrada
+            follower.set({registration_id: registrationId,
                         sistema: sistema_disp});
         }
         
         // guardamos en el servidor
-        // save genera POST /appnotifys
-        notify.save(null, {
+        // save genera POST /appfollowers
+        follower.save(null, {
             success:function(model, response){
                 console.log("succes save");
                 console.log("model:");
                 console.log(model);
                 console.log("response:");
                 console.log(response);
+                alert(model);
             },
             error: function(model, response) {
                 console.log("error save");
                 console.log(model);
                 console.log(response);
+                alert('error');
 
             },
             wait: true
