@@ -289,10 +289,7 @@
     // guardamos el reg_ig en nuestro servidor
     function saveRegistrationId(registrationId) {
         
-        // lo guardamos en LocalStorage 
-        window.localStorage.setItem('reg_id', registrationId);
-        
-        // y el la BBDD...
+        // Guardamos en BBDD y si todo va bien se guarda tbn en localStorage
         
         // sistema operativo del dispositivo
         var sistema_disp;
@@ -335,8 +332,9 @@
                 console.log("response:");
                 console.log(response);
         
-                window.localStorage.setItem('id_follow', follower.id_follow);
-                console.log(follower.id_follow);
+                // lo guardamos en LocalStorage 
+                window.localStorage.setItem('reg_id', registrationId);
+                window.localStorage.setItem('id_follow', model.id_follow);
             },
             error: function(model, response) {
                 console.log("error save");
