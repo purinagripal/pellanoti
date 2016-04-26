@@ -229,24 +229,20 @@
             // comprobamos si tiene RegistrationId
             if( window.localStorage.getItem('reg_id') ){
                 // ya esta guardado
-                alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
+                //alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
+                console.log("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
                 
                 if( window.localStorage.getItem('reg_id') != data.registrationId ) {
                     // si ha cambiado lo guardamos DE NUEVO
-                    // lo guardamos en LocalStorage 
-                    window.localStorage.setItem('reg_id', data.registrationId);
-                    // y en la BBDD
-                    saveRegistrationId_android(data.registrationId);
+                    saveRegistrationId(data.registrationId);
                 }
 
             } else {
-                alert("registration id: "+data.registrationId);
+                //alert("registration id: "+data.registrationId);
+                console.log("registration id: "+data.registrationId);
                 
                 // lo guardamos por PRIMERA vez 
-                // en LocalStorage 
-                window.localStorage.setItem('reg_id', data.registrationId);
-                // y en la BBDD 
-                saveRegistrationId_android(data.registrationId);
+                saveRegistrationId(data.registrationId);
             }
         });
 
@@ -291,7 +287,12 @@
     };
      
     // guardamos el reg_ig en nuestro servidor
-    function saveRegistrationId_android(registrationId) {
+    function saveRegistrationId(registrationId) {
+        
+        // lo guardamos en LocalStorage 
+        window.localStorage.setItem('reg_id', registrationId);
+        
+        // y el la BBDD...
         
         // sistema operativo del dispositivo
         var sistema_disp;
@@ -327,19 +328,18 @@
         // save genera POST /appfollowers
         follower.save(null, {
             success:function(model, response){
+                alert(model);
                 console.log("succes save");
                 console.log("model:");
                 console.log(model);
                 console.log("response:");
                 console.log(response);
-                alert(model);
+                
+                window.localStorage.setItem('id_follow', follower.id_follow);
+                console.log(follower.id_follow);
             },
             error: function(model, response) {
                 console.log("error save");
-                console.log(model);
-                console.log(response);
-                alert('error');
-
             },
             wait: true
         });
