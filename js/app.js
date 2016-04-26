@@ -334,7 +334,7 @@
         
                 // lo guardamos en LocalStorage 
                 window.localStorage.setItem('reg_id', registrationId);
-                window.localStorage.setItem('id_follow', model.id_follow);
+                window.localStorage.setItem('id_follow', response.id_follow);
             },
             error: function(model, response) {
                 console.log("error save");
