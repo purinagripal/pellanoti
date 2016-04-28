@@ -62,6 +62,7 @@ var PreferView = Backbone.View.extend({
         //var datosForm = $("#prefer-form").serializeObject();
         console.log("preferencias categorias");
         console.log(this.pref_categ);
+        alert(this.pref_categ);
         
         
     }
