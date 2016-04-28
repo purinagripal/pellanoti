@@ -8,6 +8,9 @@
     LocalesView.prototype.template = Handlebars.compile($("#locales-tpl").html());
     LocalView.prototype.template = Handlebars.compile($("#local-tpl").html());
     LocalDetailsView.prototype.template = Handlebars.compile($("#local-details-tpl").html());
+    
+    PreferView.prototype.template1 = Handlebars.compile($("#preferFirst-tpl").html());
+    PreferView.prototype.template2 = Handlebars.compile($("#prefer-tpl").html());
 
     /* ---------------------------------- Local Variables ---------------------------------- */
     var slider = new PageSlider($('body'));
@@ -22,12 +25,17 @@
 
         routes: {
             "":                     "home",
+            "preferencias":         "preferencias",
             "categ/:id_cat":        "categoria",
             "zona/:id_ciudad":      "ciudad",
             "eventos/:id":          "eventoDetails",
             "locales":              "locales",
             "zona_loc/:id_ciudad":  "ciudadLocales",
             "local/:id":            "localDetails"
+        },
+        
+        preferencias: function () {
+            slider.slidePage(new PreferView().render().$el);
         },
 
         home: function () {
@@ -183,6 +191,13 @@
     var router = new AppRouter();
     
     Backbone.history.start();
+    
+    if( !window.localStorage.getItem('prefer') ) {
+        // si no están seleccionadas las preferencias de notificacion nos redirige
+        Backbone.history.navigate('preferencias', {trigger: true});
+        // borra del historial
+        Backbone.history.navigate('', {replace: true});
+    }
 
     /* --------------------------------- Event Registration -------------------------------- */
 
@@ -281,11 +296,10 @@
             // e.message
         });
         
-        
-        
     
     };
      
+    
     // guardamos el reg_ig en nuestro servidor
     function saveRegistrationId(registrationId) {
         
@@ -342,7 +356,6 @@
             wait: true
         });
     }
-    
     
     
     function onBackKeyDown() {

@@ -12,20 +12,81 @@
 </head>
 <body>
 
-<script id="notif-tpl" type="text/template">
-    <div class="app"> 
-        <h1>PhoneGap</h1> 
-        <form id="formulario" name="formulario" method="post" action="PHPServer/registro.php"> 
-            <p><input type="text" id="name" name="name" placeholder="Nombre" required></p> 
-            <p><input type="text" id="email" name="email" placeholder="Correo" required></p> 
-            <p><input type="text" name="regId" id="regId" readonly="readonly" placeholder="regId"></p> 
-            <button type="button" onclick="registrar();">Registar</button> 
-        </form>   
+<script id="preferFirst-tpl" type="text/template">
+    <div class="header-50">
+        <div class="head_sup">
+            <img src="logo.png" /> <h1>Pella de Ocio</h1>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    
+    <div class="container wrapper-absolute-50 evento-detalle">
+        <div class="row cuadro">
+            <div class="col-xs-12">
+                <h4>Preferencias</h4>
+                <p>Pella de Ocio te avisa cuando se publica un nuevo evento.</p>
+                <p>Selecciona las categorías y lugares de los que quieres recibir notificaciones.</p>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-lg-6">
+                <ul class="list-group">
+                  <li id="cat1" class="sel_cat list-group-item" data-id="1">Música <i class="fa fa-check"></i></li>
+                  <li id="cat2" class="sel_cat list-group-item" data-id="2">Espectáculos <i class="fa fa-check"></i></li>
+                  <li id="cat3" class="sel_cat list-group-item" data-id="3">Talleres y cursos <i class="fa fa-check"></i></li>
+                  <li id="cat4" class="sel_cat list-group-item" data-id="4">Charlas y encuentros <i class="fa fa-check"></i></li>
+                  <li id="cat5" class="sel_cat list-group-item" data-id="5">Deportes <i class="fa fa-check"></i></li>
+                  <li id="cat6" class="sel_cat list-group-item" data-id="6">Para niños <i class="fa fa-check"></i></li>
+                </ul>
 
-        <div id="deviceready" class="blink"> 
-            <p class="event listening">Connecting to Device</p> 
-            <p class="event received">Device is Ready</p> 
-        </div>   
+
+            </div>
+            <div class="col-xs-12">
+                <a id="boton_guardar" class="btn btn-pella btn-lg btn-block" >Guardar</a>
+            </div>
+            <div class="col-xs-12">
+                
+            </div>   
+        </div>
+    </div>
+</script>
+    
+<script id="prefer-tpl" type="text/template">
+    <div class="header-50">
+        <div class="head_sup">
+            <a class="boton_atras pull-left"><i class="fa fa-arrow-left"></i></a>
+            <a class="boton_inicio pull-left"><i class="fa fa-home"></i></a>
+            
+            <img src="logo.png" /> <h1>Pella de Ocio</h1>
+            
+            <div class="menu_drop dropdown pull-right">
+                <a class="dropdown-toggle" id="dropdownMenuMain" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_locales" >Locales</a></li>
+                    <li><a class="link_eventos" >Eventos</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="menu_salir">Salir</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    
+    <div class="container wrapper-absolute-50 evento-detalle">
+        <div class="row cuadro">
+            <div class="col-xs-12">
+                <h4>Preferencias</h4>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-lg-6">
+            
+            </div>
+            <div class="col-xs-12 col-sm-7 col-lg-6">
+                
+            </div>
+            <div class="col-xs-12">
+                
+            </div>   
+        </div>
     </div>
 </script>
     
@@ -168,7 +229,7 @@
             </div>   
         </div>
     </div>
-    </script>
+</script>
 
 <script id="locales-tpl" type="text/template">
     <div class="header">
@@ -299,7 +360,8 @@
 <script src="lib/backbone.js"></script>
 <script src="lib/pageslider.js"></script>
 <script src="lib/bootstrap.min.js"></script>
-    
+
+<script src="js/custom.js"></script>    
 <script src="js/models.js"></script>
 <script src="js/HomeView.js"></script>
 <script src="js/EventoListItemView.js"></script>    
@@ -307,6 +369,7 @@
 <script src="js/LocalesView.js"></script>
 <script src="js/LocalView.js"></script>
 <script src="js/LocalDetailsView.js"></script>
+<script src="js/PreferView.js"></script>
 <script src="js/app.js"></script>
 
 </body>
