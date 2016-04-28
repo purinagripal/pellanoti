@@ -3,7 +3,7 @@ var PreferView = Backbone.View.extend({
     initialize:function () {
         console.log('initialize de preferView');
         
-        this.pref_ciudad = [0,0,0,0,0,0,0];
+        this.pref_ciudad = [0,0,0,0,0,0,0,0,0];
         this.pref_categ = [0,0,0,0,0,0,0];
         
         this.$el.html(this.template1());

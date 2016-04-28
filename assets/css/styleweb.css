@@ -163,9 +163,51 @@ a.menu_salir {
 .list-group {
     color:black;
 }
-.sel_cat i {
+.sel_cat i, .sel_ciudad i {
     display: none;
 }
+.btn-pella {
+  color: #fff;
+  background-color: #f2ab00;
+  border-color: #f2ab00;
+}
+.btn-pella:hover,
+.btn-pella:focus,
+.btn-pella:active,
+.btn-pella.active,
+.open .dropdown-toggle.btn-pella {
+  color: #fff;
+  background-color: #fdb300;
+  border-color: #f2ab00;
+}
+.btn-pella:active,
+.btn-pella.active,
+.open .dropdown-toggle.btn-pella {
+  background-image: none;
+}
+.btn-pella.disabled,
+.btn-pella[disabled],
+fieldset[disabled] .btn-pella,
+.btn-pella.disabled:hover,
+.btn-pella[disabled]:hover,
+fieldset[disabled] .btn-pella:hover,
+.btn-pella.disabled:focus,
+.btn-pella[disabled]:focus,
+fieldset[disabled] .btn-pella:focus,
+.btn-pella.disabled:active,
+.btn-pella[disabled]:active,
+fieldset[disabled] .btn-pella:active,
+.btn-pella.disabled.active,
+.btn-pella[disabled].active,
+fieldset[disabled] .btn-pella.active {
+  background-color: #f7c54c;
+  border-color: #f7c54c;
+}
+.btn-pella .badge {
+  color: #fdb300;
+  background-color: #fff;
+}
+
 
 #eve-map-canvas {
     width:100%; 
