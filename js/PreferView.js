@@ -93,7 +93,7 @@ var PreferView = Backbone.View.extend({
             // modelo 
             var follower = new Follower();
             follower.set({
-                id_follow: 1, //window.localStorage.getItem('id_follow'),
+                id_follow: ls_id_follow, //window.localStorage.getItem('id_follow'),
                 FollowCategorias: categorias,
                 FollowCiudades: ciudades
             });
