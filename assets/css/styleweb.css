@@ -160,6 +160,10 @@ a.menu_salir {
 
 
 /* Favoritos */
+#cargando {
+    display: none;
+    text-align: center;
+}
 .list-group {
     color:black;
 }

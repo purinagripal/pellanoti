@@ -72,6 +72,10 @@ var PreferView = Backbone.View.extend({
         console.log("guardando");
         
        // if( window.localStorage.getItem('id_follow') ){
+        
+            // muestra imagen cargando...
+            $('#cargando').show();
+            $('#boton_guardar').hide();
             
             var ls_id_follow = window.localStorage.getItem('id_follow');
             var categorias = [];
@@ -99,8 +103,17 @@ var PreferView = Backbone.View.extend({
             });
             
             follower.save(null, {
-                success:function(model, response){},
-                error: function(model, response) {},
+                success:function(model, response){
+                    // guarda las preferencias en localStorage
+                    window.localStorage.setItem('pref_categ', JSON.stringify(categorias));
+                    window.localStorage.setItem('pref_ciudad', JSON.stringify(ciudades));
+                    // redirecciona a INICIO
+                    Backbone.history.navigate('', {trigger: true});
+                },
+                error: function(model, response) {
+                    $('#boton_guardar').show();
+                    $('#cargando').hide();
+                },
                 wait: true
             });
        // }
