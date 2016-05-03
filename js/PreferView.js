@@ -39,7 +39,8 @@ var PreferView = Backbone.View.extend({
 
     events: {
         "click #boton_guardar": "guardar_prefes",
-        "click .sel_cat": "selec_categoria"
+        "click .sel_cat": "selec_categoria",
+        "click .sel_ciudad": "selec_ciudad"
     },
     
     selec_categoria: function (event) {
@@ -54,15 +55,63 @@ var PreferView = Backbone.View.extend({
         console.log(this.pref_categ);
     },
     
+    selec_ciudad: function (event) {
+        var index_ciu = $(event.currentTarget).attr('data-id'); 
+        if(this.pref_ciudad[index_ciu]==0) {
+            this.pref_ciudad[index_ciu]=1;
+            $('#ciudad'+index_ciu+' i').show();
+        } else {
+            this.pref_ciudad[index_ciu]=0;
+            $('#ciudad'+index_ciu+' i').hide();
+        }
+        console.log(this.pref_ciudad);
+    },
+    
     guardar_prefes: function (event) {
-        // al enviar el formulario muestra conectando
-        var registr_id = window.localStorage.getItem('reg_id');
-        alert('registration_id: '+registr_id);
         
-        //var datosForm = $("#prefer-form").serializeObject();
-        console.log("preferencias categorias");
-        console.log(this.pref_categ);
-        alert(this.pref_categ);
+        console.log("guardando");
+        
+       // if( window.localStorage.getItem('id_follow') ){
+            
+            var ls_id_follow = window.localStorage.getItem('id_follow');
+            var categorias = [];
+            var ciudades = [];
+            
+            // preparamos el array CATEGORIAS
+            for (index = 1; index < this.pref_categ.length; index++) { 
+                if( this.pref_categ[index] == 1 ) {
+                    categorias.push({id_categoria:index});
+                }
+            }
+            // preparamos el array CIUDADES
+            for (index = 1; index < this.pref_ciudad.length; index++) { 
+                if( this.pref_ciudad[index] == 1 ) {
+                    ciudades.push({id_ciudad:index});
+                }
+            }
+            
+            // modelo 
+            var follower = new Follower();
+            follower.set({
+                id_follow: 1, //window.localStorage.getItem('id_follow'),
+                FollowCategorias: categorias,
+                FollowCiudades: ciudades
+            });
+            
+            follower.save(null, {
+                success:function(model, response){},
+                error: function(model, response) {},
+                wait: true
+            });
+       // }
+            
+        
+//        console.log("preferencias categorias");
+//        console.log(this.pref_categ);
+//        console.log("preferencias ciudad");
+//        console.log(this.pref_ciudad);
+//        alert('categorias: '+this.pref_categ);
+//        alert('ciudades: '+this.pref_ciudad);
         
         
     }
