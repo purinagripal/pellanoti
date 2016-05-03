@@ -69,7 +69,7 @@ var PreferView = Backbone.View.extend({
     
     guardar_prefes: function (event) {
         
-        console.log("guardando");
+        console.log("guardar_prefes");
         
        // if( window.localStorage.getItem('id_follow') ){
         
@@ -108,11 +108,13 @@ var PreferView = Backbone.View.extend({
                     window.localStorage.setItem('pref_categ', JSON.stringify(categorias));
                     window.localStorage.setItem('pref_ciudad', JSON.stringify(ciudades));
                     // redirecciona a INICIO
-                    Backbone.history.navigate('', {trigger: true});
+                    Backbone.history.navigate('', {trigger: true, replace: true});
                 },
                 error: function(model, response) {
                     $('#boton_guardar').show();
                     $('#cargando').hide();
+                    // redirecciona a INICIO (para que no se quede bloqueado en esta pantalla
+                    Backbone.history.navigate('', {trigger: true, replace: true});
                 },
                 wait: true
             });

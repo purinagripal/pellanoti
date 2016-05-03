@@ -195,8 +195,6 @@
     if( !window.localStorage.getItem('prefer') ) {
         // si no están seleccionadas las preferencias de notificacion nos redirige
         Backbone.history.navigate('preferencias', {trigger: true});
-        // borra del historial
-        Backbone.history.navigate('', {replace: true});
     }
 
     /* --------------------------------- Event Registration -------------------------------- */
