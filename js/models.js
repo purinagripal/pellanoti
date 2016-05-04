@@ -46,8 +46,8 @@ var EventoCollection = Backbone.Collection.extend({
 var Follower = Backbone.Model.extend({
     idAttribute: 'id_follow',
     
-    urlRoot: "http://localhost/fuerteagenda_cms/appfollowers", 
-    //urlRoot: "http://test.mepwebs.com/appfollowers", 
+    //urlRoot: "http://localhost/fuerteagenda_cms/appfollowers", 
+    urlRoot: "http://test.mepwebs.com/appfollowers", 
     
     
 });
