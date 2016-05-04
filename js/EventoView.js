@@ -34,6 +34,7 @@ var EventoView = Backbone.View.extend({
     events: {
         "click .local_link": "ver_local",
         "click .link_locales": "ver_locales",
+        "click .link_notif": "ver_prefer",
         "click .link_eventos": "volver_inicio",
         "click .boton_inicio": "volver_inicio",
         "click .boton_atras": "volver_atras",
@@ -57,6 +58,15 @@ var EventoView = Backbone.View.extend({
         
         //console.log(event);
         Backbone.history.navigate('locales', {trigger: true});
+    },
+    
+    ver_prefer: function (event) {        
+        // reset historial
+        window.historial = ['', 'preferencias'];
+        console.log("window.historial: "+window.historial);
+        
+        //console.log(event);
+        Backbone.history.navigate('preferencias', {trigger: true});
     },
     
     volver_inicio: function (event) {

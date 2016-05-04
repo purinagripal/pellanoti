@@ -9,8 +9,7 @@
     LocalView.prototype.template = Handlebars.compile($("#local-tpl").html());
     LocalDetailsView.prototype.template = Handlebars.compile($("#local-details-tpl").html());
     
-    PreferView.prototype.template1 = Handlebars.compile($("#preferFirst-tpl").html());
-    PreferView.prototype.template2 = Handlebars.compile($("#prefer-tpl").html());
+    PreferView.prototype.template = Handlebars.compile($("#prefer-tpl").html());
 
     /* ---------------------------------- Local Variables ---------------------------------- */
     var slider = new PageSlider($('body'));
@@ -192,7 +191,7 @@
     
     Backbone.history.start();
     
-    if( !window.localStorage.getItem('prefer') ) {
+    if( !window.localStorage.getItem('pref_categ') ) {
         // si no están seleccionadas las preferencias de notificacion nos redirige
         Backbone.history.navigate('preferencias', {trigger: true});
     }

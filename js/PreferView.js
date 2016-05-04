@@ -6,29 +6,56 @@ var PreferView = Backbone.View.extend({
         this.pref_ciudad = [0,0,0,0,0,0,0,0,0];
         this.pref_categ = [0,0,0,0,0,0,0];
         
-        this.$el.html(this.template1());
-        /*
-        // si hay datos de usuario salta el formulario de login
-        if(window.localStorage.getItem('usuario')){
-            // oculta formulario
-            $('#login-formulario', this.el).hide();
+        this.$el.html(this.template());
+        
+        // comprueba si ya tenemos preferencias guardadas
+        if(window.localStorage.getItem('pref_categ')) {
             
-            console.log("usuario localStorage: "+window.localStorage.getItem('usuario'));
-            console.log("clave localStorage: "+window.localStorage.getItem('passwd'));
+            // si hay preferencias guardadas las carga
             
-            // envia datos al servidor para ver si el usuario esta vigente
-            var datosActualizados = new FormData();
-            datosActualizados.append('usuario', window.localStorage.getItem('usuario'));
-            datosActualizados.append('contrasena', window.localStorage.getItem('passwd'));
-            console.log("datosActualizados");
-            console.log(datosActualizados);
+            // paso lo guardado en localStorage a arrays
+            var ls_pref_categ = window.localStorage.getItem('pref_categ');
+            ls_pref_categ = JSON.parse(ls_pref_categ);
+            //console.log(ls_pref_categ);
+            var ls_pref_ciudad = window.localStorage.getItem('pref_ciudad');
+            ls_pref_ciudad = JSON.parse(ls_pref_ciudad);
+            //console.log(ls_pref_ciudad);
             
-            this.autenticar_svr(datosActualizados);
+            
+            // CATEGORIAS: cargamos ls en this.pref_categ 
+            var id_categoria;
+            for (index = 0; index < ls_pref_categ.length; index++) { 
+                id_categoria = ls_pref_categ[index].id_categoria;
+                this.pref_categ[id_categoria] = 1;
+                $('#cat'+id_categoria+' i', this.el).show();
+            }
+            console.log('pref_categ');
+            console.log(this.pref_categ);
+            
+            // CIUDADES: cargamos ls en this.pref_ciudad
+            var id_ciudad;
+            for (index = 0; index < ls_pref_ciudad.length; index++) { 
+                id_ciudad = ls_pref_ciudad[index].id_ciudad;
+                this.pref_ciudad[id_ciudad] = 1;
+                $('#ciudad'+id_ciudad+' i', this.el).show();
+            }
+            console.log('pref_ciudad');
+            console.log(this.pref_ciudad);
             
         } else {
-            console.log("no localstorage");
-            $('#login-access', this.el).hide();
-        }*/
+            // no hay preferencias guardadas
+            
+            // oculto el menú de navegación superior
+            $('.boton_inicio', this.el).hide();
+            $('.menu_drop', this.el).hide();
+            
+            // selecciono todo por defecto
+            this.pref_ciudad = [0,1,1,1,1,1,1,1,1];
+            this.pref_categ = [0,1,1,1,1,1,1];
+            $('.sel_ciudad i', this.el).show();
+            $('.sel_cat i', this.el).show();
+            
+        }
     },
 
     render:function () {
@@ -40,7 +67,11 @@ var PreferView = Backbone.View.extend({
     events: {
         "click #boton_guardar": "guardar_prefes",
         "click .sel_cat": "selec_categoria",
-        "click .sel_ciudad": "selec_ciudad"
+        "click .sel_ciudad": "selec_ciudad",
+        
+        "click .link_locales": "ver_locales",
+        "click .link_eventos": "volver_inicio",
+        "click .boton_inicio": "volver_inicio"
     },
     
     selec_categoria: function (event) {
@@ -129,7 +160,34 @@ var PreferView = Backbone.View.extend({
 //        alert('ciudades: '+this.pref_ciudad);
         
         
+    },
+    
+    ///////////////////////////////////////
+    //
+    //    ENLACES DEL MENU SUPERIOR
+    //
+    
+    ver_locales: function (event) {        
+        // resetea el historial
+        window.historial = ['', 'locales'];
+        console.log("window.historial: "+window.historial);
+        
+        //console.log(event);
+        Backbone.history.navigate('locales', {trigger: true});
+    },
+    
+    volver_inicio: function (event) {
+        // resetea el historial
+        window.historial = [""];
+        console.log("window.historial: "+window.historial);
+        Backbone.history.navigate( "", {trigger: true} );
     }
+    
+    //
+    //   ENLACES DEL MENU SUPERIOR
+    //
+    //////////////////////////////////////////
+    
     
    
 });

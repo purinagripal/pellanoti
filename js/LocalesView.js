@@ -46,6 +46,7 @@ var LocalesView = Backbone.View.extend({
     events: {
         "click .menu_salir": "salir",
         "click .link_eventos": "volver_inicio",
+        "click .link_notif": "ver_prefer",
         "click .boton_inicio": "volver_inicio",
         "click .row.cuadro": "ver_local",
         "click .filt_zona": "filtra_ciudad"
@@ -72,6 +73,15 @@ var LocalesView = Backbone.View.extend({
         // borra del historial
         Backbone.history.navigate('zona_loc/'+id_ciudad, {trigger: true});
         Backbone.history.navigate('locales', {replace: true});
+    },
+    
+    ver_prefer: function (event) {        
+        // reset historial
+        window.historial = ['', 'preferencias'];
+        console.log("window.historial: "+window.historial);
+        
+        //console.log(event);
+        Backbone.history.navigate('preferencias', {trigger: true});
     },
     
     volver_inicio: function (event) {
