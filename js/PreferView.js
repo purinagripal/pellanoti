@@ -136,12 +136,6 @@ var PreferView = Backbone.View.extend({
         
     },
     
-    confirmGuardar: function (buttonIndex) {
-        if(buttonIndex==1) {
-            this.guardarPreferencias();
-        }
-    },
-    
     click_guardar: function (event) {
         
         console.log("guardar_prefes");
@@ -178,8 +172,10 @@ var PreferView = Backbone.View.extend({
             var contexto = this;
             navigator.notification.confirm(
                 mensaje, // message
-                contexto.confirmGuardar,            // callback to invoke with index of button pressed
-                'Pella de Ocio',           // title
+                function(buttonIndex) {
+                    if(buttonIndex==1) { contexto.guardarPreferencias(); }
+                }, // callback to invoke with index of button pressed
+                'Pella de Ocio',         // title
                 ['No quiero notificaciones','Elegir de nuevo']     // buttonLabels
             );
         } else {
