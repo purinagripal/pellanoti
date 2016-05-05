@@ -5,6 +5,8 @@ var PreferView = Backbone.View.extend({
         
         this.pref_ciudad = [0,0,0,0,0,0,0,0,0];
         this.pref_categ = [0,0,0,0,0,0,0];
+        this.categorias = [];
+        this.ciudades = [];
         
         this.$el.html(this.template());
         
@@ -65,7 +67,7 @@ var PreferView = Backbone.View.extend({
     },
 
     events: {
-        "click #boton_guardar": "guardar_prefes",
+        "click #boton_guardar": "click_guardar",
         "click .sel_cat": "selec_categoria",
         "click .sel_ciudad": "selec_ciudad",
         
@@ -100,73 +102,92 @@ var PreferView = Backbone.View.extend({
     
     confirmGuardar: function (buttonIndex) {
         alert('boton pulsado: '+buttonIndex);
+        if(buttonIndex==1) {
+            this.guardarPreferencias();
+        }
     },
     
-    guardar_prefes: function (event) {
+    guardarPreferencias: function () {
+        // TO_DO: habría que COMPROBAR si ya tenemos el id_follow guardado
+        var ls_id_follow = window.localStorage.getItem('id_follow');
+        var contexto_this = this;
+        
+        // muestra imagen cargando...
+        $('#cargando').show();
+        $('#boton_guardar').hide();
+        
+        // modelo 
+        var follower = new Follower();
+        follower.set({
+            id_follow: ls_id_follow, //window.localStorage.getItem('id_follow'),
+            FollowCategorias: contexto_this.categorias,
+            FollowCiudades: contexto_this.ciudades
+        });
+
+        follower.save(null, {
+            success:function(model, response){
+                // guarda las preferencias en localStorage
+                window.localStorage.setItem('pref_categ', JSON.stringify(contexto_this.categorias));
+                window.localStorage.setItem('pref_ciudad', JSON.stringify(contexto_this.ciudades));
+                // redirecciona a INICIO
+                Backbone.history.navigate('', {trigger: true, replace: true});
+            },
+            error: function(model, response) {
+                $('#boton_guardar').show();
+                $('#cargando').hide();
+                // redirecciona a INICIO (para que no se quede bloqueado en esta pantalla
+                Backbone.history.navigate('', {trigger: true, replace: true});
+            },
+            wait: true
+        });
+        
+    },
+    
+    click_guardar: function (event) {
         
         console.log("guardar_prefes");
         
-
-        // TO_DO: habría que COMPROBAR si ya tenemos el id_follow guardado
-        var ls_id_follow = window.localStorage.getItem('id_follow');
-        var categorias = [];
-        var ciudades = [];
+        this.categorias = [];
+        this.ciudades = [];
 
         // preparamos el array CATEGORIAS
         for (index = 1; index < this.pref_categ.length; index++) { 
             if( this.pref_categ[index] == 1 ) {
-                categorias.push({id_categoria:index});
+                this.categorias.push({id_categoria:index});
             }
         }
         // preparamos el array CIUDADES
         for (index = 1; index < this.pref_ciudad.length; index++) { 
             if( this.pref_ciudad[index] == 1 ) {
-                ciudades.push({id_ciudad:index});
+                this.ciudades.push({id_ciudad:index});
             }
         }
         
-        // si no hay NINGUNA categoria o NINGUNA zona seleccionada
-        if( categorias.length==0 || ciudades.length==0 ) {
+        
+        if( this.categorias.length==0 || this.ciudades.length==0 ) {
+            // si no hay NINGUNA categoria o NINGUNA zona seleccionada
             console.log('categorias o zonas no seleccionadas');
+            var mensaje;
+            if( this.categorias.length==0 ) {
+                mensaje = 'No has seleccionado ninguna categoría.';
+            }
+            if( this.ciudades.length==0 ) {
+                mensaje = 'No has seleccionado ninguna zona.';
+            }
+            mensaje += ' Para recibir notificaciones debes elegir al menos una categoría y una zona.';
             
             var contexto = this;
             navigator.notification.confirm(
-                'Elige al menos una categoría y una zona para recibir notificaciones', // message
-                 contexto.confirmGuardar,            // callback to invoke with index of button pressed
+                mensaje, // message
+                contexto.confirmGuardar,            // callback to invoke with index of button pressed
                 'Pella de Ocio',           // title
-                ['No recibir notificaciones','Seleccionar preferencias de nuevo']     // buttonLabels
+                ['No quiero notificaciones','Elegir de nuevo']     // buttonLabels
             );
+        } else {
+            // categoria y zona seleccionada
+            // guardamos en servidor y localStorage
+            this.guardarPreferencias();
         }
-
-        // muestra imagen cargando...
-        $('#cargando').show();
-        $('#boton_guardar').hide();
-        
-//        // modelo 
-//        var follower = new Follower();
-//        follower.set({
-//            id_follow: ls_id_follow, //window.localStorage.getItem('id_follow'),
-//            FollowCategorias: categorias,
-//            FollowCiudades: ciudades
-//        });
-//
-//        follower.save(null, {
-//            success:function(model, response){
-//                // guarda las preferencias en localStorage
-//                window.localStorage.setItem('pref_categ', JSON.stringify(categorias));
-//                window.localStorage.setItem('pref_ciudad', JSON.stringify(ciudades));
-//                // redirecciona a INICIO
-//                Backbone.history.navigate('', {trigger: true, replace: true});
-//            },
-//            error: function(model, response) {
-//                $('#boton_guardar').show();
-//                $('#cargando').hide();
-//                // redirecciona a INICIO (para que no se quede bloqueado en esta pantalla
-//                Backbone.history.navigate('', {trigger: true, replace: true});
-//            },
-//            wait: true
-//        });
-            
         
     },
     
