@@ -100,13 +100,6 @@ var PreferView = Backbone.View.extend({
         console.log(this.pref_ciudad);
     },
     
-    confirmGuardar: function (buttonIndex) {
-        alert('boton pulsado: '+buttonIndex);
-        if(buttonIndex==1) {
-            this.guardarPreferencias();
-        }
-    },
-    
     guardarPreferencias: function () {
         // TO_DO: habría que COMPROBAR si ya tenemos el id_follow guardado
         var ls_id_follow = window.localStorage.getItem('id_follow');
@@ -141,6 +134,12 @@ var PreferView = Backbone.View.extend({
             wait: true
         });
         
+    },
+    
+    confirmGuardar: function (buttonIndex) {
+        if(buttonIndex==1) {
+            this.guardarPreferencias();
+        }
     },
     
     click_guardar: function (event) {
