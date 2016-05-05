@@ -1,6 +1,6 @@
 var PreferView = Backbone.View.extend({
 
-    initialize:function () {
+    initialize: function () {
         console.log('initialize de preferView');
         
         this.pref_ciudad = [0,0,0,0,0,0,0,0,0];
@@ -58,8 +58,8 @@ var PreferView = Backbone.View.extend({
         }
     },
 
-    render:function () {
-        console.log('render de loginView');
+    render: function () {
+        console.log('render de PreferView');
         //this.$el.html(this.template()); // en initialize para poder preparar la vista
         return this;
     },
@@ -98,67 +98,75 @@ var PreferView = Backbone.View.extend({
         console.log(this.pref_ciudad);
     },
     
+    confirmGuardar: function (buttonIndex) {
+        alert('boton pulsado: '+buttonIndex);
+    },
+    
     guardar_prefes: function (event) {
         
         console.log("guardar_prefes");
         
-       // if( window.localStorage.getItem('id_follow') ){
-        
-            // muestra imagen cargando...
-            $('#cargando').show();
-            $('#boton_guardar').hide();
-            
-            var ls_id_follow = window.localStorage.getItem('id_follow');
-            var categorias = [];
-            var ciudades = [];
-            
-            // preparamos el array CATEGORIAS
-            for (index = 1; index < this.pref_categ.length; index++) { 
-                if( this.pref_categ[index] == 1 ) {
-                    categorias.push({id_categoria:index});
-                }
+
+        // TO_DO: habría que COMPROBAR si ya tenemos el id_follow guardado
+        var ls_id_follow = window.localStorage.getItem('id_follow');
+        var categorias = [];
+        var ciudades = [];
+
+        // preparamos el array CATEGORIAS
+        for (index = 1; index < this.pref_categ.length; index++) { 
+            if( this.pref_categ[index] == 1 ) {
+                categorias.push({id_categoria:index});
             }
-            // preparamos el array CIUDADES
-            for (index = 1; index < this.pref_ciudad.length; index++) { 
-                if( this.pref_ciudad[index] == 1 ) {
-                    ciudades.push({id_ciudad:index});
-                }
+        }
+        // preparamos el array CIUDADES
+        for (index = 1; index < this.pref_ciudad.length; index++) { 
+            if( this.pref_ciudad[index] == 1 ) {
+                ciudades.push({id_ciudad:index});
             }
-            
-            // modelo 
-            var follower = new Follower();
-            follower.set({
-                id_follow: ls_id_follow, //window.localStorage.getItem('id_follow'),
-                FollowCategorias: categorias,
-                FollowCiudades: ciudades
-            });
-            
-            follower.save(null, {
-                success:function(model, response){
-                    // guarda las preferencias en localStorage
-                    window.localStorage.setItem('pref_categ', JSON.stringify(categorias));
-                    window.localStorage.setItem('pref_ciudad', JSON.stringify(ciudades));
-                    // redirecciona a INICIO
-                    Backbone.history.navigate('', {trigger: true, replace: true});
-                },
-                error: function(model, response) {
-                    $('#boton_guardar').show();
-                    $('#cargando').hide();
-                    // redirecciona a INICIO (para que no se quede bloqueado en esta pantalla
-                    Backbone.history.navigate('', {trigger: true, replace: true});
-                },
-                wait: true
-            });
-       // }
-            
+        }
         
-//        console.log("preferencias categorias");
-//        console.log(this.pref_categ);
-//        console.log("preferencias ciudad");
-//        console.log(this.pref_ciudad);
-//        alert('categorias: '+this.pref_categ);
-//        alert('ciudades: '+this.pref_ciudad);
+        // si no hay NINGUNA categoria o NINGUNA zona seleccionada
+        if( categorias.length==0 || ciudades.length==0 ) {
+            console.log('categorias o zonas no seleccionadas');
+            
+            var contexto = this;
+            navigator.notification.confirm(
+                'Elige al menos una categoría y una zona para recibir notificaciones', // message
+                 contexto.confirmGuardar,            // callback to invoke with index of button pressed
+                'Pella de Ocio',           // title
+                ['No recibir notificaciones','Seleccionar preferencias de nuevo']     // buttonLabels
+            );
+        }
+
+        // muestra imagen cargando...
+        $('#cargando').show();
+        $('#boton_guardar').hide();
         
+//        // modelo 
+//        var follower = new Follower();
+//        follower.set({
+//            id_follow: ls_id_follow, //window.localStorage.getItem('id_follow'),
+//            FollowCategorias: categorias,
+//            FollowCiudades: ciudades
+//        });
+//
+//        follower.save(null, {
+//            success:function(model, response){
+//                // guarda las preferencias en localStorage
+//                window.localStorage.setItem('pref_categ', JSON.stringify(categorias));
+//                window.localStorage.setItem('pref_ciudad', JSON.stringify(ciudades));
+//                // redirecciona a INICIO
+//                Backbone.history.navigate('', {trigger: true, replace: true});
+//            },
+//            error: function(model, response) {
+//                $('#boton_guardar').show();
+//                $('#cargando').hide();
+//                // redirecciona a INICIO (para que no se quede bloqueado en esta pantalla
+//                Backbone.history.navigate('', {trigger: true, replace: true});
+//            },
+//            wait: true
+//        });
+            
         
     },
     
@@ -187,7 +195,6 @@ var PreferView = Backbone.View.extend({
     //   ENLACES DEL MENU SUPERIOR
     //
     //////////////////////////////////////////
-    
     
    
 });
