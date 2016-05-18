@@ -19,6 +19,7 @@ var HomeView = Backbone.View.extend({
 
     render:function () {
         console.log('render de homeView');
+        //console.log(JSON.stringify(this.model));
                 
         this.$el.html(this.template());
            
@@ -84,6 +85,7 @@ var HomeView = Backbone.View.extend({
     },
 
     events: {
+        "click .link_favoritos": "ver_favoritos",
         "click .link_locales": "ver_locales",
         "click .link_notif": "ver_prefer",
         //"click .link_eventos": "salir",
@@ -135,6 +137,15 @@ var HomeView = Backbone.View.extend({
         
         //console.log(event);
         Backbone.history.navigate('locales', {trigger: true});
+    },
+    
+    ver_favoritos: function (event) {        
+        // reset historial
+        window.historial = ['', 'favoritos'];
+        console.log("window.historial: "+window.historial);
+        
+        //console.log(event);
+        Backbone.history.navigate('favoritos', {trigger: true});
     },
     
     ver_prefer: function (event) {        

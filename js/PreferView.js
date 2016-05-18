@@ -3,8 +3,8 @@ var PreferView = Backbone.View.extend({
     initialize: function () {
         console.log('initialize de preferView');
         
-        this.pref_ciudad = [0,0,0,0,0,0,0,0,0];
-        this.pref_categ = [0,0,0,0,0,0,0];
+        this.ciudades_01 = [0,0,0,0,0,0,0,0,0];
+        this.categorias_01 = [0,0,0,0,0,0,0];
         this.categorias = [];
         this.ciudades = [];
         
@@ -24,25 +24,25 @@ var PreferView = Backbone.View.extend({
             //console.log(ls_pref_ciudad);
             
             
-            // CATEGORIAS: cargamos ls en this.pref_categ 
+            // CATEGORIAS: cargamos ls en this.categorias_01 como array de 0's y 1's
             var id_categoria;
             for (index = 0; index < ls_pref_categ.length; index++) { 
                 id_categoria = ls_pref_categ[index].id_categoria;
-                this.pref_categ[id_categoria] = 1;
+                this.categorias_01[id_categoria] = 1;
                 $('#cat'+id_categoria+' i', this.el).show();
             }
-            console.log('pref_categ');
-            console.log(this.pref_categ);
+            console.log('categorias 0y1');
+            console.log(this.categorias_01);
             
-            // CIUDADES: cargamos ls en this.pref_ciudad
+            // CIUDADES: cargamos ls en this.ciudades_01 como array de 0's y 1's
             var id_ciudad;
             for (index = 0; index < ls_pref_ciudad.length; index++) { 
                 id_ciudad = ls_pref_ciudad[index].id_ciudad;
-                this.pref_ciudad[id_ciudad] = 1;
+                this.ciudades_01[id_ciudad] = 1;
                 $('#ciudad'+id_ciudad+' i', this.el).show();
             }
-            console.log('pref_ciudad');
-            console.log(this.pref_ciudad);
+            console.log('ciudades 0y1');
+            console.log(this.ciudades_01);
             
         } else {
             // no hay preferencias guardadas
@@ -52,8 +52,8 @@ var PreferView = Backbone.View.extend({
             $('.menu_drop', this.el).hide();
             
             // selecciono todo por defecto
-            this.pref_ciudad = [0,1,1,1,1,1,1,1,1];
-            this.pref_categ = [0,1,1,1,1,1,1];
+            this.ciudades_01 = [0,1,1,1,1,1,1,1,1];
+            this.categorias_01 = [0,1,1,1,1,1,1];
             $('.sel_ciudad i', this.el).show();
             $('.sel_cat i', this.el).show();
             
@@ -78,26 +78,26 @@ var PreferView = Backbone.View.extend({
     
     selec_categoria: function (event) {
         var index_cat = $(event.currentTarget).attr('data-id'); 
-        if(this.pref_categ[index_cat]==0) {
-            this.pref_categ[index_cat]=1;
+        if(this.categorias_01[index_cat]==0) {
+            this.categorias_01[index_cat]=1;
             $('#cat'+index_cat+' i').show();
         } else {
-            this.pref_categ[index_cat]=0;
+            this.categorias_01[index_cat]=0;
             $('#cat'+index_cat+' i').hide();
         }
-        console.log(this.pref_categ);
+        console.log(this.categorias_01);
     },
     
     selec_ciudad: function (event) {
         var index_ciu = $(event.currentTarget).attr('data-id'); 
-        if(this.pref_ciudad[index_ciu]==0) {
-            this.pref_ciudad[index_ciu]=1;
+        if(this.ciudades_01[index_ciu]==0) {
+            this.ciudades_01[index_ciu]=1;
             $('#ciudad'+index_ciu+' i').show();
         } else {
-            this.pref_ciudad[index_ciu]=0;
+            this.ciudades_01[index_ciu]=0;
             $('#ciudad'+index_ciu+' i').hide();
         }
-        console.log(this.pref_ciudad);
+        console.log(this.ciudades_01);
     },
     
     guardarPreferencias: function () {
@@ -143,15 +143,15 @@ var PreferView = Backbone.View.extend({
         this.categorias = [];
         this.ciudades = [];
 
-        // preparamos el array CATEGORIAS
-        for (index = 1; index < this.pref_categ.length; index++) { 
-            if( this.pref_categ[index] == 1 ) {
+        // preparamos el array CATEGORIAS con valores de id_categoria
+        for (index = 1; index < this.categorias_01.length; index++) { 
+            if( this.categorias_01[index] == 1 ) {
                 this.categorias.push({id_categoria:index});
             }
         }
-        // preparamos el array CIUDADES
-        for (index = 1; index < this.pref_ciudad.length; index++) { 
-            if( this.pref_ciudad[index] == 1 ) {
+        // preparamos el array CIUDADES con valores de id_ciudad
+        for (index = 1; index < this.ciudades_01.length; index++) { 
+            if( this.ciudades_01[index] == 1 ) {
                 this.ciudades.push({id_ciudad:index});
             }
         }

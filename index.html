@@ -93,6 +93,7 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
                     <li><a class="link_locales" >Locales</a></li>
                     <li><a class="link_eventos" href="#">Eventos</a></li>
+                    <li><a class="link_favoritos" >Favoritos</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a class="link_notif" >Notificaciones</a></li>
                     <li role="separator" class="divider"></li>
@@ -157,6 +158,38 @@
             <span><b>{{fecha_dm.dia}}</b> {{fecha_dm.mes}}</span>
             <span class="hora">{{hora_format}} h</span>
         </div>
+    </div>
+</script>
+    
+<script id="favoritos-tpl" type="text/template">
+    <div class="header">
+        <div class="head_sup">
+            <a class="boton_inicio pull-left"><i class="fa fa-home"></i></a>
+        
+            <img src="logo.png" /> <h1>Pella de Ocio</h1>
+            
+            <div class="menu_drop dropdown pull-right">
+                <a class="dropdown-toggle" id="dropdownMenuMain" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_locales" >Locales</a></li>
+                    <li><a class="link_eventos" href="#">Eventos</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="link_notif" >Notificaciones</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="menu_salir">Salir</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="head_inf">
+            Favoritos
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="container-fluid guiaeventos wrapper-absolute-80">
+    
     </div>
 </script>
 
@@ -369,6 +402,7 @@
 <script src="js/LocalView.js"></script>
 <script src="js/LocalDetailsView.js"></script>
 <script src="js/PreferView.js"></script>
+<script src="js/FavoritosView.js"></script>
 <script src="js/app.js"></script>
 
 </body>

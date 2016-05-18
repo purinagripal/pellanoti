@@ -10,6 +10,7 @@
     LocalDetailsView.prototype.template = Handlebars.compile($("#local-details-tpl").html());
     
     PreferView.prototype.template = Handlebars.compile($("#prefer-tpl").html());
+    FavoritosView.prototype.template = Handlebars.compile($("#favoritos-tpl").html());
 
     /* ---------------------------------- Local Variables ---------------------------------- */
     var slider = new PageSlider($('body'));
@@ -25,6 +26,7 @@
         routes: {
             "":                     "home",
             "preferencias":         "preferencias",
+            "favoritos":            "favoritos",
             "categ/:id_cat":        "categoria",
             "zona/:id_ciudad":      "ciudad",
             "eventos/:id":          "eventoDetails",
@@ -128,6 +130,22 @@
             google.maps.event.trigger(window.map, 'resize');
             window.map.setOptions(window.mapOptions);
             //window.map.setCenter(window.mapOptions.center);
+        },
+        
+        favoritos: function () {
+            // como puede cambiar segun las preferencias cada vez creamos una vista nueva
+            //this.favoritosList = new EventoCollection(this.eventosList.where({id_categoria: '1', id_ciudad: '2'}));
+            
+            /*this.pre_favoritosList = new EventoCollection(this.eventosList.where({id_categoria: '1'}).concat( this.eventosList.where({id_categoria: '3'}) ));
+            this.favoritosList = new EventoCollection(this.pre_favoritosList.where({id_ciudad: '1'}));
+            this.favoritosList.sort();*/
+            
+            this.favoritosList = this.eventosList.obtenerFavoritos();
+
+            //console.log(JSON.stringify(this.favoritosList));
+            
+            $("html,body").scrollTop(0);
+            slider.slidePage(new FavoritosView({model: this.favoritosList}).$el);
         },
         
         locales: function () {
