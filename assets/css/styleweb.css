@@ -168,6 +168,13 @@ a.menu_salir {
 }
 /* fin estilos header */
 
+/* HOME */
+.cargando_eventos {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+.eventos_cargados {display: none;}
 
 /* Favoritos */
 #cargando {

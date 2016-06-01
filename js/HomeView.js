@@ -4,29 +4,36 @@ var HomeView = Backbone.View.extend({
         console.log('initialize de homeView');
         this.categoria = 0;
         this.ciudad = 0;
-        // this.model.bind("reset", this.render, this);
-        this.model.on("reset", this.render, this);
+        
+        this.$el.html(this.template());
+        
+        //this.model.on("reset", this.render, this);
+        var contexto = this;
         this.model.fetch({reset: true, 
                           success: function() {
-                            console.log( 'fetch success' );
-                            /*// ocultar pantalla presentacion 
-                            setTimeout(function() {
-                                navigator.splashscreen.hide();
-                            }, 1500);*/
+                            console.log( 'fetch success' );                            
                           },
                           complete: function() {
-                            console.log( 'fetch complete, oculta splashscreen' );
-                            // ocultar pantalla presentacion 
-                            navigator.splashscreen.hide();
+                              //alert('fetch complete');
+                              console.log( 'fetch complete, oculta cargando' );
+                              
+                              // renderiza eventos una vez descargados
+                              contexto.cargarEventos();
+                              
+                              $('.cargando_eventos', this.el).hide();
+                              $('.eventos_cargados', this.el).show();
                           }
         });
+        
+        
+        this.render();
     },
 
     render:function () {
         console.log('render de homeView');
         //console.log(JSON.stringify(this.model));
                 
-        this.$el.html(this.template());
+        //this.$el.html(this.template());
            
         // boton categoria
         var categ_txt;
@@ -83,9 +90,9 @@ var HomeView = Backbone.View.extend({
         }
         this.$('#dropdownMenuCiudad').html(ciudad_txt+' <span class="caret"></span>');
                 
-        _.each(this.model.models, 
+        /*_.each(this.model.models, 
                function (evento) {$('.guiaeventos', this.el).append(new EventoListItemView({model: evento}).render().el);}, 
-               this);
+               this);*/
         return this;
     },
 
@@ -98,6 +105,16 @@ var HomeView = Backbone.View.extend({
         "click .row.cuadro": "ver_evento",
         "click .filt_categ": "filtra_categoria",
         "click .filt_zona": "filtra_ciudad"
+    },
+    
+    cargarEventos: function () {
+        // resetea el div
+        $('.guiaeventos', this.el).html('');
+        
+        // añade de nuevo los eventos
+        _.each(this.model.models, 
+               function (evento) {$('.guiaeventos', this.el).append(new EventoListItemView({model: evento}).render().el);}, 
+               this);
     },
     
     filtra_categoria: function (event) {

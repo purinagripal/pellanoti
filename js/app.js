@@ -58,10 +58,10 @@
             if (!homeView) {
                 this.eventosList = new EventoCollection();
                 homeView = new HomeView({model: this.eventosList});
-                //homeView.render();
+                
             } else {
                 console.log('reusing home view');
-                homeView.render();
+                homeView.cargarEventos();
                 homeView.delegateEvents(); // delegate events when the view is recycled
             }
             slider.slidePage(homeView.$el);
@@ -235,7 +235,7 @@
     }
     
     // para probar el funcionamiento en local
-    //eventosNotificados();
+    // eventosNotificados();
     
 
     /* --------------------------------- Event Registration -------------------------------- */
@@ -339,6 +339,11 @@
             // e.message
         });
         
+        // oculta splashscreen (mejor ponerlo en config.xml
+        setTimeout(function() {
+            navigator.splashscreen.hide();
+        }, 1000);
+        
     
     };
     
@@ -375,6 +380,8 @@
                 // y guarda todo en LS
                 window.localStorage.setItem('ev_notif', JSON.stringify(eventos_notificados));
                 
+                // reset historial
+                window.historial = ['', 'favoritos'];
                 // redirecciona a favoritos
                 Backbone.history.navigate('favoritos', {trigger: true});
             },
