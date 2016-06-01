@@ -97,6 +97,7 @@
             //console.log(JSON.stringify(this.eventosCateg));
             
             homeView.model = this.eventosCateg;
+            homeView.cargarEventos();
             homeView.render();
         },
         
@@ -130,6 +131,7 @@
             //console.log(JSON.stringify(this.eventosCateg));
             
             homeView.model = this.eventosCiudad;
+            homeView.cargarEventos();
             homeView.render();
         },
 
