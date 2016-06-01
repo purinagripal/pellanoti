@@ -20,6 +20,20 @@
     var homeView;
     var localesView;
     var localDetailsView;
+    
+    /*this.eventosList = new EventoCollection();
+    this.eventosList.fetch({reset: true, 
+                      success: function() {
+                        console.log( 'fetch terminado, esconde splashscreen' );
+                        // ocultar pantalla presentacion 
+                        setTimeout(function() {
+                            navigator.splashscreen.hide();
+                        }, 1500);
+                      },
+                      wait: true
+    });*/
+    
+    
 
     var AppRouter = Backbone.Router.extend({
 
@@ -47,6 +61,7 @@
                 //homeView.render();
             } else {
                 console.log('reusing home view');
+                homeView.render();
                 homeView.delegateEvents(); // delegate events when the view is recycled
             }
             slider.slidePage(homeView.$el);
@@ -205,14 +220,23 @@
 
     
     console.log("window.historial: "+window.historial);
-    var router = new AppRouter();
     
+    var router = new AppRouter();
     Backbone.history.start();
     
+    // establecer el localStorage para eventos notificados si no existe
+    if( !window.localStorage.getItem('ev_notif') ) {
+        window.localStorage.setItem('ev_notif', '[]');
+    }
+    
+    // si no están seleccionadas las preferencias de notificacion nos redirige
     if( !window.localStorage.getItem('pref_categ') ) {
-        // si no están seleccionadas las preferencias de notificacion nos redirige
         Backbone.history.navigate('preferencias', {trigger: true});
     }
+    
+    // para probar el funcionamiento en local
+    //eventosNotificados();
+    
 
     /* --------------------------------- Event Registration -------------------------------- */
 
@@ -278,7 +302,11 @@
 
         push.on('notification', function(data) {
             
-            console.log('notificacion: '+data.message);
+            eventosNotificados();
+            
+            
+            
+            /*console.log('notificacion: '+data.message);
             console.log('id_evento: '+data.additionalData.id_evento);
             console.log(data.additionalData);
             
@@ -302,7 +330,7 @@
                 notif_anteriores = [data.additionalData.id_evento];
                 // guardamos la primera
                 window.localStorage.setItem( 'notificaciones', JSON.stringify(notif_anteriores) );
-            }
+            }*/
             
         });
 
@@ -313,6 +341,51 @@
         
     
     };
+    
+    
+    function eventosNotificados() {
+        
+        var id_follow = window.localStorage.getItem('id_follow');
+        console.log('eventos notificados para id_follow='+id_follow);
+        
+        $.ajax({
+            url: 'http://test.mepwebs.com/app_feventos/'+id_follow,
+            //url: 'http://localhost/fuerteagenda_cms/app_feventos/'+id_follow,
+            data: '',
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function(data){
+                console.log('success');
+                console.log(data);
+                // une los nuevos a los guardados (si hay)
+                var eventos_notificados = window.localStorage.getItem('ev_notif');
+                eventos_notificados = JSON.parse(eventos_notificados);
+                
+                // localhost devuelve un json en "data", lo pasamos a array con parse
+                //eventos_notificados = eventos_notificados.concat( JSON.parse(data) );
+                
+                // el servidor devuelve un array en "data"
+                eventos_notificados = eventos_notificados.concat(data);
+                
+                //eventos_notificados = eventos_notificados+JSON.stringify(JSON.parse(data));
+                console.log('eventos_notificados');
+                console.log(eventos_notificados);
+                // y guarda todo en LS
+                window.localStorage.setItem('ev_notif', JSON.stringify(eventos_notificados));
+                
+                // redirecciona a favoritos
+                Backbone.history.navigate('favoritos', {trigger: true});
+            },
+            error: function(data){
+                console.log("error");
+                console.log(data);
+            }
+        });
+        
+    };
+    
      
     
     // guardamos el reg_ig en nuestro servidor
@@ -370,7 +443,7 @@
             },
             wait: true
         });
-    }
+    };
     
     
     function onBackKeyDown() {

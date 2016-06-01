@@ -125,12 +125,22 @@ a:hover{color:#fff;text-decoration:none}
     display: inline;
     text-align: right;
 }
+/*.menu_drop i.fa {font-size: 2em;}*/
+.menu_drop .dropdown-menu .fa {font-size: 0.8em;}
 a.menu_salir {
     display: inline;
 }
 
 .header .head_inf {
 /*    padding-top: 5px;*/
+}
+
+.header .head_inf.favoritos {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    letter-spacing: 0.2em;
+    margin-top: 10px;
 }
 .selec_drop {
     display: inline;
@@ -163,6 +173,7 @@ a.menu_salir {
 #cargando {
     display: none;
     text-align: center;
+    margin-bottom: 50px;
 }
 .list-group {
     color:black;
@@ -170,10 +181,19 @@ a.menu_salir {
 .sel_cat i, .sel_ciudad i {
     display: none;
 }
+
+/* campana de notificacion */
+.notif.fa-bell {
+    display: none;
+}
+
 .btn-pella {
   color: #fff;
   background-color: #f2ab00;
   border-color: #f2ab00;
+    margin-bottom: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .btn-pella:hover,
 .btn-pella:focus,

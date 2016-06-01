@@ -8,11 +8,16 @@ var HomeView = Backbone.View.extend({
         this.model.on("reset", this.render, this);
         this.model.fetch({reset: true, 
                           success: function() {
-                            console.log( 'fetch terminado, esconde splashscreen' );
-                            // ocultar pantalla presentacion 
+                            console.log( 'fetch success' );
+                            /*// ocultar pantalla presentacion 
                             setTimeout(function() {
                                 navigator.splashscreen.hide();
-                            }, 1500);
+                            }, 1500);*/
+                          },
+                          complete: function() {
+                            console.log( 'fetch complete, oculta splashscreen' );
+                            // ocultar pantalla presentacion 
+                            navigator.splashscreen.hide();
                           }
         });
     },
@@ -85,11 +90,11 @@ var HomeView = Backbone.View.extend({
     },
 
     events: {
-        "click .link_favoritos": "ver_favoritos",
         "click .link_locales": "ver_locales",
-        "click .link_notif": "ver_prefer",
-        //"click .link_eventos": "salir",
+        "click .link_favoritos": "ver_favoritos",
+        "click .link_prefer": "ver_prefer",        
         "click .menu_salir": "salir",
+        
         "click .row.cuadro": "ver_evento",
         "click .filt_categ": "filtra_categoria",
         "click .filt_zona": "filtra_ciudad"
@@ -130,6 +135,11 @@ var HomeView = Backbone.View.extend({
         Backbone.history.navigate('eventos/'+id_evento, {trigger: true});
     },
     
+    ///////////////////////////////////////
+    //
+    //    ENLACES DEL MENU SUPERIOR
+    //
+    
     ver_locales: function (event) {        
         // reset historial
         window.historial = ['', 'locales'];
@@ -156,7 +166,6 @@ var HomeView = Backbone.View.extend({
         //console.log(event);
         Backbone.history.navigate('preferencias', {trigger: true});
     },
-
 
     salir: function (event) {
         console.log("SALIR");

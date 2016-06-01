@@ -24,10 +24,9 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_eventos">Eventos</a></li>
                     <li><a class="link_locales" >Locales</a></li>
-                    <li><a class="link_eventos" >Eventos</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a class="link_notif" >Notificaciones</a></li>
+                    <li><a class="link_favoritos" ><i class="fa fa-heart"></i> Favoritos</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a class="menu_salir">Salir</a></li>
                 </ul>
@@ -92,10 +91,9 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
                     <li><a class="link_locales" >Locales</a></li>
-                    <li><a class="link_eventos" href="#">Eventos</a></li>
-                    <li><a class="link_favoritos" >Favoritos</a></li>
+                    <li><a class="link_favoritos" ><i class="fa fa-heart"></i> Favoritos</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a class="link_notif" >Notificaciones</a></li>
+                    <li><a class="link_prefer" ><i class="fa fa-cog"></i> Preferencias</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a class="menu_salir">Salir</a></li>
                 </ul>
@@ -143,7 +141,7 @@
 <script id="eventos-list-tpl" type="text/template">
     <div class="row cuadro" data-id="{{id_evento}}" >
         <div class="col-xs-9">                
-            <h5><a href="#eventos/{{id_evento}}" >{{title}}</a></h5>
+            <h5><a href="#eventos/{{id_evento}}" ><i class="notif fa fa-bell"></i> {{title}}</a></h5>
             <div class="row">
                 <div class="col-xs-5">
                     <a href="#eventos/{{id_evento}}" ><img src="http://test.mepwebs.com/uploads/medias/{{image}}" class="img-responsive" /></a>
@@ -173,17 +171,17 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_eventos">Eventos</a></li>
                     <li><a class="link_locales" >Locales</a></li>
-                    <li><a class="link_eventos" href="#">Eventos</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a class="link_notif" >Notificaciones</a></li>
+                    <li><a class="link_prefer" ><i class="fa fa-cog"></i> Preferencias</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a class="menu_salir">Salir</a></li>
                 </ul>
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="head_inf">
+        <div class="head_inf favoritos">
             Favoritos
             <div class="clearfix"></div>
         </div>
@@ -206,10 +204,11 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_eventos">Eventos</a></li>
                     <li><a class="link_locales" >Locales</a></li>
-                    <li><a class="link_eventos" >Eventos</a></li>
+                    <li><a class="link_favoritos" ><i class="fa fa-heart"></i> Favoritos</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a class="link_notif" >Notificaciones</a></li>
+                    <li><a class="link_prefer" ><i class="fa fa-cog"></i> Preferencias</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a class="menu_salir">Salir</a></li>
                 </ul>
@@ -271,10 +270,10 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
-                    <li><a class="link_locales" href="#locales" >Locales</a></li>
-                    <li><a class="link_eventos" >Eventos</a></li>
+                    <li><a class="link_eventos">Eventos</a></li>
+                    <li><a class="link_favoritos" ><i class="fa fa-heart"></i> Favoritos</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a class="link_notif" >Notificaciones</a></li>
+                    <li><a class="link_prefer" ><i class="fa fa-cog"></i> Preferencias</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a class="menu_salir">Salir</a></li>
                 </ul>
@@ -332,10 +331,11 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuMain">
+                    <li><a class="link_eventos">Eventos</a></li>
                     <li><a class="link_locales" >Locales</a></li>
-                    <li><a class="link_eventos" >Eventos</a></li>
+                    <li><a class="link_favoritos" ><i class="fa fa-heart"></i> Favoritos</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a class="link_notif" >Notificaciones</a></li>
+                    <li><a class="link_prefer" ><i class="fa fa-cog"></i> Preferencias</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a class="menu_salir">Salir</a></li>
                 </ul>

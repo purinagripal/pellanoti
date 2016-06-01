@@ -44,10 +44,12 @@ var LocalesView = Backbone.View.extend({
     },
 
     events: {
-        "click .menu_salir": "salir",
-        "click .link_eventos": "volver_inicio",
-        "click .link_notif": "ver_prefer",
         "click .boton_inicio": "volver_inicio",
+        "click .link_eventos": "volver_inicio",
+        "click .link_favoritos": "ver_favoritos",
+        "click .link_prefer": "ver_prefer",
+        "click .menu_salir": "salir",
+        
         "click .row.cuadro": "ver_local",
         "click .filt_zona": "filtra_ciudad"
     },
@@ -75,6 +77,28 @@ var LocalesView = Backbone.View.extend({
         Backbone.history.navigate('locales', {replace: true});
     },
     
+   
+    ///////////////////////////////////////
+    //
+    //    ENLACES DEL MENU SUPERIOR
+    //
+    
+    volver_inicio: function (event) {
+        // resetea el historial
+        window.historial = [""];
+        console.log("window.historial: "+window.historial);
+        Backbone.history.navigate('', {trigger: true});
+    },
+    
+    ver_favoritos: function (event) {        
+        // reset historial
+        window.historial = ['', 'favoritos'];
+        console.log("window.historial: "+window.historial);
+        
+        //console.log(event);
+        Backbone.history.navigate('favoritos', {trigger: true});
+    },
+    
     ver_prefer: function (event) {        
         // reset historial
         window.historial = ['', 'preferencias'];
@@ -82,13 +106,6 @@ var LocalesView = Backbone.View.extend({
         
         //console.log(event);
         Backbone.history.navigate('preferencias', {trigger: true});
-    },
-    
-    volver_inicio: function (event) {
-        // resetea el historial
-        window.historial = [""];
-        console.log("window.historial: "+window.historial);
-        Backbone.history.navigate('', {trigger: true});
     },
 
     salir: function (event) {

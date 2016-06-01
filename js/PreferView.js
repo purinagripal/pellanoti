@@ -71,9 +71,11 @@ var PreferView = Backbone.View.extend({
         "click .sel_cat": "selec_categoria",
         "click .sel_ciudad": "selec_ciudad",
         
-        "click .link_locales": "ver_locales",
+        "click .boton_inicio": "volver_inicio",
         "click .link_eventos": "volver_inicio",
-        "click .boton_inicio": "volver_inicio"
+        "click .link_locales": "ver_locales",
+        "click .link_favoritos": "ver_favoritos",
+        "click .menu_salir": "salir"
     },
     
     selec_categoria: function (event) {
@@ -200,11 +202,25 @@ var PreferView = Backbone.View.extend({
         Backbone.history.navigate('locales', {trigger: true});
     },
     
+    ver_favoritos: function (event) {        
+        // reset historial
+        window.historial = ['', 'favoritos'];
+        console.log("window.historial: "+window.historial);
+        
+        //console.log(event);
+        Backbone.history.navigate('favoritos', {trigger: true});
+    },
+    
     volver_inicio: function (event) {
         // resetea el historial
         window.historial = [""];
         console.log("window.historial: "+window.historial);
         Backbone.history.navigate( "", {trigger: true} );
+    }, 
+    
+    salir: function (event) {
+        console.log("SALIR");
+        navigator.app.exitApp();
     }
     
     //

@@ -21,13 +21,16 @@ var LocalView = Backbone.View.extend({
 
     
     events: {
-        "click .guiaeventos.eventoslocal .cuadro": "l_ver_evento",
-        "click .link_locales": "ver_locales",
-        "click .link_notif": "ver_prefer",
-        "click .link_eventos": "volver_inicio",
         "click .boton_inicio": "volver_inicio",
+        "click .link_eventos": "volver_inicio",
+        "click .link_locales": "ver_locales",
+        "click .link_favoritos": "ver_favoritos",
+        "click .link_prefer": "ver_prefer",
+        
         "click .boton_atras": "volver_atras",
-        "click .menu_salir": "salir"
+        "click .menu_salir": "salir",
+        
+        "click .guiaeventos.eventoslocal .cuadro": "l_ver_evento"
     },
     
     l_ver_evento: function (event) {
@@ -43,6 +46,11 @@ var LocalView = Backbone.View.extend({
         Backbone.history.navigate('eventos/'+id_evento, {trigger: true});
     },
     
+    ///////////////////////////////////////
+    //
+    //    ENLACES DEL MENU SUPERIOR
+    //
+    
      ver_locales: function (event) {        
         // resetea el historial
         window.historial = ['', 'locales'];
@@ -50,6 +58,15 @@ var LocalView = Backbone.View.extend({
         
         //console.log(event);
         Backbone.history.navigate('locales', {trigger: true});
+    },
+    
+    ver_favoritos: function (event) {        
+        // reset historial
+        window.historial = ['', 'favoritos'];
+        console.log("window.historial: "+window.historial);
+        
+        //console.log(event);
+        Backbone.history.navigate('favoritos', {trigger: true});
     },
     
     ver_prefer: function (event) {        
