@@ -238,7 +238,7 @@
     }
     
     // para probar el funcionamiento en local
-    eventosNotificados();
+    // eventosNotificados();
     
 
     /* --------------------------------- Event Registration -------------------------------- */
