@@ -396,7 +396,8 @@
                 // reset historial
                 window.historial = ['', 'favoritos'];
                 // redirecciona a favoritos
-                Backbone.history.navigate('favoritos', {trigger: true});
+                Backbone.history.navigate('', {replace: true}); // por si ya estaba en favoritos
+                Backbone.history.navigate('favoritos', {replace: true, trigger: true});
                 
                 // reiniciar la variable x si la app queda abierta mucho tiempo
                 setTimeout( function(){ 
