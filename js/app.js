@@ -238,7 +238,7 @@
     }
     
     // para probar el funcionamiento en local
-    // eventosNotificados();
+    eventosNotificados();
     
 
     /* --------------------------------- Event Registration -------------------------------- */
@@ -343,9 +343,7 @@
         });
         
         // oculta splashscreen (mejor ponerlo en config.xml
-        setTimeout(function() {
-            navigator.splashscreen.hide();
-        }, 1000);
+        navigator.splashscreen.hide();
         
     
     };
@@ -368,7 +366,7 @@
             processData: false,
             type: 'POST',
             success: function(data){
-                console.log('success');
+                console.log('success eventos notificados');
                 console.log(data);
                 // une los nuevos a los guardados (si hay)
                 var eventos_notificados = window.localStorage.getItem('ev_notif');
@@ -386,15 +384,25 @@
                 // y guarda todo en LS
                 window.localStorage.setItem('ev_notif', JSON.stringify(eventos_notificados));
                 
+                
+            },
+            error: function(data){
+                console.log("error eventos notificados");
+                console.log(data);
+            },
+            complete: function(data){
+                console.log("complete eventos notificados");
+                
                 // reset historial
                 window.historial = ['', 'favoritos'];
                 // redirecciona a favoritos
                 Backbone.history.navigate('favoritos', {trigger: true});
+                
+                // reiniciar la variable x si la app queda abierta mucho tiempo
+                setTimeout( function(){ 
+                    window.notif_vistas = 0; 
+                }, 5000);
             },
-            error: function(data){
-                console.log("error");
-                console.log(data);
-            }
         });
         
     };
