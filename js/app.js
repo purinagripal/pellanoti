@@ -353,6 +353,9 @@
     
     function eventosNotificados() {
         
+        // marcamos como las notificaciones como vistas para que no se repita la descarga de notificaciones
+        window.notif_vistas = 1;
+        
         var id_follow = window.localStorage.getItem('id_follow');
         console.log('eventos notificados para id_follow='+id_follow);
         
@@ -382,9 +385,6 @@
                 console.log(eventos_notificados);
                 // y guarda todo en LS
                 window.localStorage.setItem('ev_notif', JSON.stringify(eventos_notificados));
-                
-                // marcamos como las notificaciones como vistas para que no se repita la descarga de notificaciones
-                window.notif_vistas = 1;
                 
                 // reset historial
                 window.historial = ['', 'favoritos'];
