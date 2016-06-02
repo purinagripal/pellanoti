@@ -16,6 +16,7 @@
     var slider = new PageSlider($('body'));
     
     window.historial = [""];
+    window.notif_vistas = 0;
 
     var homeView;
     var localesView;
@@ -303,10 +304,10 @@
         });
 
         push.on('notification', function(data) {
-            
-            eventosNotificados();
-            
-            
+            // para que solo descargue las notificaciones una vez (no por cada notificacion)
+            if( window.notif_vistas == 0 ) {
+                eventosNotificados();
+            } 
             
             /*console.log('notificacion: '+data.message);
             console.log('id_evento: '+data.additionalData.id_evento);
@@ -381,6 +382,9 @@
                 console.log(eventos_notificados);
                 // y guarda todo en LS
                 window.localStorage.setItem('ev_notif', JSON.stringify(eventos_notificados));
+                
+                // marcamos como las notificaciones como vistas para que no se repita la descarga de notificaciones
+                window.notif_vistas = 1;
                 
                 // reset historial
                 window.historial = ['', 'favoritos'];
