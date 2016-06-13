@@ -20,8 +20,7 @@ var HomeView = Backbone.View.extend({
                               // renderiza eventos una vez descargados
                               contexto.cargarEventos();
                               
-                              $('.cargando_eventos', this.el).hide();
-                              $('.eventos_cargados', this.el).show();
+                              
                           }
         });
         
@@ -115,6 +114,9 @@ var HomeView = Backbone.View.extend({
         _.each(this.model.models, 
                function (evento) {$('.guiaeventos', this.el).append(new EventoListItemView({model: evento}).render().el);}, 
                this);
+        
+        $('.cargando_eventos', this.el).hide();
+        $('.eventos_cargados', this.el).show();
     },
     
     filtra_categoria: function (event) {

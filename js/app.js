@@ -407,7 +407,6 @@
         });
         
     };
-    
      
     
     // guardamos el reg_ig en nuestro servidor
