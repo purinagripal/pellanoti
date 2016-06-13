@@ -176,6 +176,11 @@ a.menu_salir {
 }
 .eventos_cargados {display: none;}
 
+/* Preferencias */
+.prefer h5 {
+    margin-top: 15px;
+}
+
 /* Favoritos */
 #cargando {
     display: none;
