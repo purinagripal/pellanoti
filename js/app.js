@@ -276,8 +276,8 @@
             },
             ios: {
                 alert: "true",
-                badge: "true",
-                sound: "true"
+                badge: "false",
+                sound: "false"
             },
             windows: {}
         });
@@ -286,7 +286,7 @@
             // comprobamos si tiene RegistrationId
             if( window.localStorage.getItem('reg_id') ){
                 // ya esta guardado
-                //alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
+                alert("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
                 console.log("RegistrationId guardado en localstorage: "+window.localStorage.getItem('reg_id'));
                 
                 if( window.localStorage.getItem('reg_id') != data.registrationId ) {
@@ -295,7 +295,7 @@
                 }
 
             } else {
-                //alert("registration id: "+data.registrationId);
+                alert("registration id: "+data.registrationId);
                 console.log("registration id: "+data.registrationId);
                 
                 // lo guardamos por PRIMERA vez 
@@ -448,7 +448,7 @@
         // save genera POST /appfollowers
         follower.save(null, {
             success:function(model, response){
-                alert(model);
+                //alert(model);
                 console.log("succes save");
                 console.log("model:");
                 console.log(model);
